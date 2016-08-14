@@ -53,8 +53,7 @@ public class MainView {
 	    // init message area
 	    statusLabel = new JLabel("",JLabel.CENTER);
 
-	    // add window listener for main window
-	    mainFrame.addWindowListener( new MainViewListener() );
+	    // terminate when window closed
 	    mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    // init menu bar
@@ -159,4 +158,11 @@ public class MainView {
 		statusLabel.setText( text );
 	}
 	
+	/**
+	 * Terminate the main window
+	 */
+	protected void terminate() {
+		mainFrame.setVisible( false );
+		mainFrame.dispose();
+	}
 }

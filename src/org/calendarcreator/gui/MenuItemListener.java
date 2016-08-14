@@ -27,6 +27,13 @@ public class MenuItemListener implements ActionListener {
 	 * Action for buttons
 	 */
 	public void actionPerformed( ActionEvent e ) {
+		// close on exit
+		if( e.getActionCommand().equals( "exit" ) ) {
+			mainView.terminate();
+			System.exit( 0 );
+		}
+		
+		// print action
 		mainView.setStatusLabel( e.getActionCommand() + " JMenuItem clicked." );
 	}
 }
