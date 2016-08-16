@@ -18,6 +18,11 @@ public class Day {
 	private DayOfWeek dayOfWeek;
 	
 	/**
+	 * Holiday identifier
+	 */
+	private Holiday holiday;
+	
+	/**
 	 * entry
 	 */
 	private String entry;
@@ -25,7 +30,7 @@ public class Day {
 	/**
 	 * week of year
 	 */
-	private int weekOfYear;
+	private Integer weekOfYear;
 	
 	/**
 	 * constructor	
@@ -35,8 +40,8 @@ public class Day {
 	public Day( int dayOfMonth, DayOfWeek dayOfWeek ) {
 		this.dayOfMonth = dayOfMonth;
 		this.dayOfWeek = dayOfWeek;
-		entry = "";
-		weekOfYear = 0;
+		this.entry = null;
+		this.weekOfYear = null;
 	}
 
 	public int getDayOfMonth() {
@@ -55,6 +60,14 @@ public class Day {
 		this.dayOfWeek = dayOfWeek;
 	}
 
+	public Holiday getHoliday() {
+		return holiday;
+	}
+
+	public void setHoliday(Holiday holiday) {
+		this.holiday = holiday;
+	}
+
 	public String getEntry() {
 		return entry;
 	}
@@ -63,7 +76,7 @@ public class Day {
 		this.entry = entry;
 	}
 
-	public int getWeekOfYear() {
+	public Integer getWeekOfYear() {
 		return weekOfYear;
 	}
 

@@ -110,7 +110,7 @@ public class YearManagerTest {
 		// create printer
 		CalendarPrinter printer = new CalendarPrinterPlain( translator );
 		// add holidays
-		yearManager.autoAddHolidays( translator );
+		yearManager.autoAddHolidays();
 		// print year
 		System.out.println( yearManager.printYear( printer ) );
 	}
@@ -122,7 +122,7 @@ public class YearManagerTest {
 		// create printer
 		CalendarPrinter printer = new CalendarPrinterPlain( translator );
 		// add holidays
-		yearManager.autoAddHolidays( translator );
+		yearManager.autoAddHolidays();
 		// print year
 		System.out.println( yearManager.printYear( printer ) );
 	}

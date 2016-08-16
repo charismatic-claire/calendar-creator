@@ -34,6 +34,25 @@ public class YearManager {
 	}
 	
 	/**
+	 * Get holiday of a specific date
+	 */
+	public Holiday getHolidayOfDate( Date date ) {
+		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
+		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
+		return day.getHoliday();
+		
+	}
+	
+	/**
+	 * Set holiday of a specific date
+	 */
+	public void setHolidayOfDate( Date date, Holiday holiday ) {
+		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
+		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
+		day.setHoliday( holiday );
+	}
+	
+	/**
 	 * Get entry of a specific date
 	 */
 	public String getEntryOfDate( Date date ) {
@@ -67,17 +86,24 @@ public class YearManager {
 		return year;
 	}
 
-	public void autoAddHolidays( CalendarTranslator translator ) {
+	public void autoAddHolidays() {
 		// get the dates
 		Map<Holiday,Date> holidays = evaluateDatesOfHolidays();
 		Set<Entry<Holiday,Date>> entries = holidays.entrySet();
 		
 		// add them to year
 		for( Entry<Holiday,Date> entry : entries ) {
-			setEntryOfDate( entry.getValue(), translator.translateHoliday( entry.getKey() ) );
+			setHolidayOfDate( entry.getValue(), entry.getKey() );
 		}
 	}
 	
+	/**
+	 * Convert to string
+	 */
+	public String printYear( CalendarPrinter printer ) {
+		return printer.printYear( year );
+	}
+
 	private Map<Holiday,Date> evaluateDatesOfHolidays() {
 		// initialize
 		Map<Holiday,Date> holidays = new HashMap<Holiday,Date>();
@@ -207,12 +233,5 @@ public class YearManager {
 		
 		// return result
 		return new Date( monthOfYear, dayOfMonth );
-	}
-	
-	/**
-	 * Convert to string
-	 */
-	public String printYear( CalendarPrinter printer ) {
-		return printer.printYear( year );
 	}
 }
