@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.gui;
+package org.calendarcreator.view;
 
 import java.awt.GridLayout;
 
@@ -11,10 +11,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.calendarcreator.controller.MenuItemListener;
+
 /**
  * the main user interface
  */
-public class MainView {
+public class CalendarView {
 
 	/**
 	 * main window
@@ -29,16 +31,24 @@ public class MainView {
 	/**
 	 * the menu bar
 	 */
-	private JMenuBar menuBar; 
+	private JMenuBar menuBar;
+	
+	/**
+	 * Action listener for menu items
+	 */
+	private MenuItemListener menuItemListener;
 
 	/**
-	 * constructor
+	 * Run the view
 	 */
-	public MainView() {
+	public void run( MenuItemListener menuItemListener ) {
+		// set menu item listener
+		this.menuItemListener = menuItemListener;
 		// prepare gui
 		prepareGUI();
 		// populate gui
 		populateGUI();
+
 	}
 	
 	/**
@@ -99,9 +109,6 @@ public class MainView {
 		JMenuItem helpMenuItem = new JMenuItem( "Show help" );
 		helpMenuItem.setActionCommand( "help" );
 		
-		// create menu item listener
-		MenuItemListener menuItemListener = new MenuItemListener( this );
-		
 		// add action listener to menu items
 		newMenuItem.addActionListener( menuItemListener );
 		openMenuItem.addActionListener( menuItemListener );
@@ -147,21 +154,21 @@ public class MainView {
 	/**
 	 * Get status label
 	 */
-	protected String getStatusLabel() {
+	public String getStatusLabel() {
 		return statusLabel.getText();
 	}
 	
 	/**
 	 * Set status label
 	 */
-	protected void setStatusLabel( String text ) {
+	public void setStatusLabel( String text ) {
 		statusLabel.setText( text );
 	}
 	
 	/**
 	 * Terminate the main window
 	 */
-	protected void terminate() {
+	public void terminate() {
 		mainFrame.setVisible( false );
 		mainFrame.dispose();
 	}
