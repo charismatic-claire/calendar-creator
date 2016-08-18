@@ -36,7 +36,7 @@ public class MenuItemListener extends CalendarController implements ActionListen
 		
 		// else tell model
 		else {
-			model.setLastActionCommand( command );
+//			model.setLastActionCommand( command );
 		}
 	}
 }

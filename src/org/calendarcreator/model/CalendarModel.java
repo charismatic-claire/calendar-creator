@@ -10,52 +10,94 @@ import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 
 /**
- *
+ * The 'Model' class in the MVC pattern. 
+ * Perform actions on years.
  */
 public class CalendarModel extends Observable {
 
-	private String lastActionCommand;
+	/**
+	 * Year, collection of weeks
+	 */
+	private Year year;
 	
-	private YearManager yearManager;
+	/**
+	 * Can create and manipulate a created year 
+	 */
+	private YearFactory yearFactory;
 	
-	public String getLastActionCommand() {
-		return lastActionCommand;
+	/**
+	 * Constructor
+	 */
+	public CalendarModel() {
+		this.year = null;
+		this.yearFactory = null;
 	}
-	
-	public void setLastActionCommand( String lastActionCommand ) {
-		// update variable
-		this.lastActionCommand = lastActionCommand;
-		// tell observer
-		setChanged();
-		notifyObservers( lastActionCommand );
-	}
-	
+
+	/**
+	 * Create a new year and hold it as private attribute
+	 * @param year Year as integer
+	 */
 	public void createYear( int year ) {
-		this.yearManager = new YearManager( new Year( year ) );
+		this.yearFactory = new YearFactory();
+		this.year = yearFactory.createYear( year );
 	}
-	
-	public void autoAddHolidays() {
-		yearManager.autoAddHolidays();
+
+	/**
+	 * Add holidays to the year hold as attribute
+	 */
+	public void addHolidays() {
+		if( yearFactory != null && year != null ) {
+			yearFactory.addHolidays( year );
+		}
 	}
-	
+
+	/**
+	 * Print an already created year
+	 * @param language Language of translation
+	 * @param style Layout style of the printer class
+	 */
 	public void printYear( Language language, Style style ) {
-		// create translator
-		CalendarTranslator translator;
-		if( language == Language.DE ) {
-			translator = new CalendarTranslatorGerman();
+		if( year != null ) {
+			// create translator
+			CalendarTranslator translator;
+			if( language == Language.DE ) {
+				translator = new CalendarTranslatorGerman();
+			}
+			else {
+				translator = new CalendarTranslatorEnglish();
+			}
+			// create printer
+			CalendarPrinter printer;
+			switch( style ) {
+				case PLAIN:
+					printer = new CalendarPrinterPortrait( translator );
+					break;
+				case LANDSCAPE:
+					printer = new CalendarPrinterLandscape( translator );
+					break;
+				case KITCHEN:
+					printer = new CalendarPrinterPortraitTexKitchen( translator );
+					break;
+				default:
+					printer = new CalendarPrinterPortraitTexClassic( translator );
+					break;
+			}
+			// print year
+			System.out.println( printer.printYear( year ) );
 		}
-		else {
-			translator = new CalendarTranslatorEnglish();
-		}
-		// create printer
-		CalendarPrinter printer;
-		if( style == Style.PLAIN ) {
-			printer = new CalendarPrinterPlain( translator );
-		}
-		else {
-			printer = new CalendarPrinterLandscape( translator );
-		}
-		// print year
-		System.out.println( printer.printYear( yearManager.getYear() ) );
 	}
+
+//	private String lastActionCommand;
+//
+//	public String getLastActionCommand() {
+//		return lastActionCommand;
+//	}
+//	
+//	public void setLastActionCommand( String lastActionCommand ) {
+//		// update variable
+//		this.lastActionCommand = lastActionCommand;
+//		// tell observer
+//		setChanged();
+//		notifyObservers( lastActionCommand );
+//	}
 }

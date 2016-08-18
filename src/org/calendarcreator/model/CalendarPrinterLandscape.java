@@ -76,7 +76,7 @@ public class CalendarPrinterLandscape implements CalendarPrinter {
 				printedWeek += "     ";
 			}
 		}
-		printedWeek += "\n  ";
+		printedWeek += "  (" + week.getWeekOfYear() + ")\n  ";
 		// print holiday and entry
 		for( int i=0; i<7; i++ ) {
 			if( week.getWeek()[i] != null ) {

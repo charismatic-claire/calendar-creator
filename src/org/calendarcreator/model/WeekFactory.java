@@ -45,7 +45,7 @@ public class WeekFactory {
 				week = new Week( monthOfYear );
 			}
 			// set week of year
-			else if( day.getValue().getDayOfWeek().equals( DayOfWeek.SUNDAY ) ) {
+			if( day.getValue().getDayOfWeek().equals( DayOfWeek.SUNDAY ) ) {
 				weekOfYear = day.getValue().getWeekOfYear();
 			}
 			// put day

@@ -19,91 +19,53 @@ import java.util.Set;
 /**
  *
  */
-public class YearManager {
+public class YearFactory {
 	
 	/**
-	 * the actual year
+	 * A year
 	 */
 	private Year year;
 	
 	/**
-	 * constructor
+	 * Create a year
 	 */
-	public YearManager( Year year ) {
-		this.year = year;
+	public Year createYear( int year ) {
+		return new Year( year );
 	}
 	
 	/**
-	 * Get holiday of a specific date
+	 * Add holidays to a given year
 	 */
-	public Holiday getHolidayOfDate( Date date ) {
-		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
-		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
-		return day.getHoliday();
-		
+	public void addHolidays( Year year ) {
+		// save the year
+		this.year = year;
+		// get the dates
+		Map<Holiday,Date> holidays = evaluateDatesOfHolidays();
+		Set<Entry<Holiday,Date>> entries = holidays.entrySet();
+		// add them to year
+		for( Entry<Holiday,Date> entry : entries ) {
+			setHolidayOfDate( entry.getValue(), entry.getKey() );
+		}
 	}
-	
+
 	/**
 	 * Set holiday of a specific date
 	 */
-	public void setHolidayOfDate( Date date, Holiday holiday ) {
+	private void setHolidayOfDate( Date date, Holiday holiday ) {
 		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
 		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
 		day.setHoliday( holiday );
 	}
 	
 	/**
-	 * Get entry of a specific date
-	 */
-	public String getEntryOfDate( Date date ) {
-		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
-		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
-		return day.getEntry();
-	}
-	
-	/**
-	 * Set entry of a specific date
-	 */
-	public void setEntryOfDate( Date date, String entry ) {
-		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
-		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
-		day.setEntry( entry );
-	}
-	
-	/**
 	 * Get day of week of a specific date
 	 */
-	public DayOfWeek getDayOfWeekOfDate( Date date ) {
+	private DayOfWeek getDayOfWeekOfDate( Date date ) {
 		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
 		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
 		return day.getDayOfWeek();
 	}
 	
-	/**
-	 * get the year
-	 */
-	public Year getYear() {
-		return year;
-	}
-
-	public void autoAddHolidays() {
-		// get the dates
-		Map<Holiday,Date> holidays = evaluateDatesOfHolidays();
-		Set<Entry<Holiday,Date>> entries = holidays.entrySet();
-		
-		// add them to year
-		for( Entry<Holiday,Date> entry : entries ) {
-			setHolidayOfDate( entry.getValue(), entry.getKey() );
-		}
-	}
-	
-	/**
-	 * Convert to string
-	 */
-	public String printYear( CalendarPrinter printer ) {
-		return printer.printYear( year );
-	}
-
 	private Map<Holiday,Date> evaluateDatesOfHolidays() {
 		// initialize
 		Map<Holiday,Date> holidays = new HashMap<Holiday,Date>();
@@ -185,7 +147,7 @@ public class YearManager {
 		int r = ( d + (a / 11) ) / 29;
 		// easter limit
 		int og = 21 + d - r;
-		// first sunday in march
+		// first sunday of march
 		int sz = 7 - ( ( x + (x / 4) + s ) % 7 );
 		// distance of easter day and easter limit
 		int oe = 7 - ( (og - sz) % 7 );

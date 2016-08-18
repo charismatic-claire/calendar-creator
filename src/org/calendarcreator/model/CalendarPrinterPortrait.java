@@ -13,11 +13,11 @@ import org.calendarcreator.data.Year;
 /**
  *
  */
-public class CalendarPrinterPlain implements CalendarPrinter {
+public class CalendarPrinterPortrait implements CalendarPrinter {
 
 	private CalendarTranslator translator;
 	
-	public CalendarPrinterPlain( CalendarTranslator translator ) {
+	public CalendarPrinterPortrait( CalendarTranslator translator ) {
 		this.translator = translator;
 	}
 	

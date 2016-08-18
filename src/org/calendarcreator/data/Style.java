@@ -2,5 +2,8 @@ package org.calendarcreator.data;
 
 public enum Style {
 	PLAIN,
-	LANDSCAPE
+	LANDSCAPE,
+	CLASSIC,
+	KITCHEN,
+	JEDDI
 }
