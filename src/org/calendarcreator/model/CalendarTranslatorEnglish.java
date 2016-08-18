@@ -63,14 +63,17 @@ public class CalendarTranslatorEnglish implements CalendarTranslator {
 		mapHoliday.put( Holiday.WHIT_SUNDAY, "Whit Sunday" );
 	}
 	
+	@Override
 	public String translateDayOfWeek(DayOfWeek dayOfWeek) {
 		return mapDayOfWeek.get( dayOfWeek );
 	}
 
+	@Override
 	public String translateMonthOfYear(MonthOfYear monthOfYear) {
 		return mapMonthOfYear.get( monthOfYear );
 	}
 
+	@Override
 	public String translateHoliday(Holiday holiday) {
 		return mapHoliday.get( holiday );
 	}

@@ -11,30 +11,31 @@ package org.calendarcreator.tests;
 //import org.calendarcreator.data.Day;
 //import org.calendarcreator.data.Holiday;
 //import org.calendarcreator.data.Month;
-import org.calendarcreator.data.Year;
-import org.calendarcreator.model.CalendarPrinter;
-import org.calendarcreator.model.CalendarPrinterPlain;
-import org.calendarcreator.model.CalendarTranslator;
-import org.calendarcreator.model.CalendarTranslatorEnglish;
-import org.calendarcreator.model.CalendarTranslatorGerman;
-import org.calendarcreator.model.YearManager;
+//import org.calendarcreator.data.Year;
+//import org.calendarcreator.model.CalendarPrinter;
+//import org.calendarcreator.model.CalendarPrinterLandscape;
+//import org.calendarcreator.model.CalendarPrinterPlain;
+//import org.calendarcreator.model.CalendarTranslator;
+//import org.calendarcreator.model.CalendarTranslatorEnglish;
+//import org.calendarcreator.model.CalendarTranslatorGerman;
+//import org.calendarcreator.model.YearManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Test;
+//import org.junit.Test;
 
 /**
  *
  */
 public class YearManagerTest {
 	
-	private static YearManager yearManager;
+//	private static YearManager yearManager;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		yearManager = new YearManager( new Year( 2016 ) );
+//		yearManager = new YearManager( new Year( 2016 ) );
 	}
 
 	/**
@@ -103,28 +104,4 @@ public class YearManagerTest {
 //		}
 //	}
 	
-	@Test
-	public void testPrintYearEn() {
-		// create translator
-		CalendarTranslator translator = new CalendarTranslatorEnglish();
-		// create printer
-		CalendarPrinter printer = new CalendarPrinterPlain( translator );
-		// add holidays
-		yearManager.autoAddHolidays();
-		// print year
-		System.out.println( yearManager.printYear( printer ) );
-	}
-	
-	@Test
-	public void testPrintYearDe() {
-		// create translator
-		CalendarTranslator translator = new CalendarTranslatorGerman();
-		// create printer
-		CalendarPrinter printer = new CalendarPrinterPlain( translator );
-		// add holidays
-		yearManager.autoAddHolidays();
-		// print year
-		System.out.println( yearManager.printYear( printer ) );
-	}
-
 }

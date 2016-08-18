@@ -21,6 +21,7 @@ public class CalendarPrinterPlain implements CalendarPrinter {
 		this.translator = translator;
 	}
 	
+	@Override
 	public String printYear(Year year) {
 		// init string
 		String printedYear = "";
@@ -38,6 +39,7 @@ public class CalendarPrinterPlain implements CalendarPrinter {
 		return printedYear;
 	}
 	
+	@Override
 	public String printMonth( Month month ) {
 		// init string
 		String printedMonth = "";

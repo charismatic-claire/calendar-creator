@@ -45,7 +45,7 @@ public class Month {
 	};
 	
 	/**
-	 * constructor II
+	 * constructor
 	 */
 	public Month( int monthOfYear, int offsetDayOfWeek, boolean isLeapYear ) {
 		// save month

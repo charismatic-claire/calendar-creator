@@ -62,14 +62,17 @@ public class CalendarTranslatorGerman implements CalendarTranslator {
 		mapHoliday.put( Holiday.WHIT_SUNDAY, "Pfingstsonntag" );
 	}
 	
+	@Override
 	public String translateDayOfWeek(DayOfWeek dayOfWeek) {
 		return mapDayOfWeek.get( dayOfWeek );
 	}
-
+	
+	@Override
 	public String translateMonthOfYear(MonthOfYear monthOfYear) {
 		return mapMonthOfYear.get( monthOfYear );
 	}
 
+	@Override
 	public String translateHoliday(Holiday holiday) {
 		return mapHoliday.get( holiday );
 	}
