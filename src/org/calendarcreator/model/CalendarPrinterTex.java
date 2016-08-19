@@ -9,18 +9,19 @@ import java.util.Map.Entry;
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Month;
+import org.calendarcreator.data.Week;
 import org.calendarcreator.data.Year;
 
 /**
  *
  */
-public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
+public abstract class CalendarPrinterTex implements CalendarPrinter {
 	
 	protected CalendarTranslator translator;
 	
 	protected Year year;
 	
-	public CalendarPrinterPortraitTex( CalendarTranslator translator ) {
+	public CalendarPrinterTex( CalendarTranslator translator ) {
 		this.translator = translator;
 	}
 
@@ -30,14 +31,7 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 		this.year = year;
 		String printedYear = "";
 		// print preamble
-		printedYear += printDocumentClass();
-		printedYear += printPackages();
-		printedYear += printGeometry();
-		printedYear += printSpacing();
-		printedYear += printCalMonth();
-		printedYear += printWorkWeek();
-		printedYear += printWeekend();
-		printedYear += printFooter();
+		printedYear += printPreamble();
 		// open document
 		printedYear += "%% content\n" +
 				"\\begin{document}\n\n";
@@ -71,7 +65,7 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 		return printedMonth;
 	}
 	
-	public String printDay( Day day ) {
+	protected String printDay( Day day ) {
 		// init string
 		String printedDay = "";
 		// open day
@@ -100,6 +94,20 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 		printedDay += "\n";
 		// return result
 		return printedDay;
+	}
+	
+	protected String printPreamble() {
+		// create
+		String printedPreamble = printDocumentClass() +
+				printPackages() +
+				printGeometry() +
+				printSpacing() +
+				printCalMonth() +
+				printWorkWeek() +
+				printWeekend() +
+				printFooter();
+		// return
+		return printedPreamble;
 	}
 	
 	protected String printDocumentClass() {
@@ -178,7 +186,7 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 		// return
 		return printedFooter;
 	}
-	
+
 	protected String printMonthOfYear( Month month ) {
 		// init string
 		String printedMonth = "";
@@ -208,6 +216,16 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 		// return result
 		return printedDayOfWeek;
 	}
+	
+	protected String printDayOfWeek( DayOfWeek dayOfWeek ) {
+		// init string
+		String printedDayOfWeek = "";
+		// print day of week
+		printedDayOfWeek += translator.translateDayOfWeek( dayOfWeek );
+		// return result
+		return printedDayOfWeek;
+	}
+
 	
 	protected String printHoliday( Day day ) {
 		// init string
@@ -240,6 +258,20 @@ public abstract class CalendarPrinterPortraitTex implements CalendarPrinter {
 				printedWeekOfYear += "0";
 			}
 			printedWeekOfYear += day.getWeekOfYear();
+		}
+		// return result
+		return printedWeekOfYear;
+	}
+	
+	protected String printWeekOfYear( Week week ) {
+		// init string
+		String printedWeekOfYear = "";
+		// print week of year
+		if( week.getWeekOfYear() != null ) {
+			if( week.getWeekOfYear() < 10 ) {
+				printedWeekOfYear += "0";
+			}
+			printedWeekOfYear += week.getWeekOfYear();
 		}
 		// return result
 		return printedWeekOfYear;

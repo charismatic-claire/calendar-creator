@@ -6,9 +6,9 @@ package org.calendarcreator.model;
 /**
  *
  */
-public class CalendarPrinterPortraitTexKitchen extends CalendarPrinterPortraitTex {
+public class CalendarPrinterTexKitchen extends CalendarPrinterTex {
 
-	public CalendarPrinterPortraitTexKitchen(CalendarTranslator translator) {
+	public CalendarPrinterTexKitchen(CalendarTranslator translator) {
 		super(translator);
 	}
 	

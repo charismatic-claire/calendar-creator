@@ -76,10 +76,13 @@ public class CalendarModel extends Observable {
 					printer = new CalendarPrinterLandscape( translator );
 					break;
 				case KITCHEN:
-					printer = new CalendarPrinterPortraitTexKitchen( translator );
+					printer = new CalendarPrinterTexKitchen( translator );
+					break;
+				case JEDDI:
+					printer = new CalendarPrinterTexJeddi( translator );
 					break;
 				default:
-					printer = new CalendarPrinterPortraitTexClassic( translator );
+					printer = new CalendarPrinterTexClassic( translator );
 					break;
 			}
 			// print year

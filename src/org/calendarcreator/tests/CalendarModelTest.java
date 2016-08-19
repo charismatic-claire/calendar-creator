@@ -29,8 +29,32 @@ public class CalendarModelTest {
 //		model.printYear( Language.DE , Style.PLAIN );		
 //	}
 
+//	@Test
+//	public void testPrintYear03() {
+//		// create new model
+//		CalendarModel model = new CalendarModel();
+//		// create new year
+//		model.createYear( 2016 );
+//		// add holidays
+//		model.addHolidays();
+//		// print year
+//		model.printYear( Language.EN , Style.CLASSIC );		
+//	}
+//
+//	@Test
+//	public void testPrintYear04() {
+//		// create new model
+//		CalendarModel model = new CalendarModel();
+//		// create new year
+//		model.createYear( 2016 );
+//		// add holidays
+//		model.addHolidays();
+//		// print year
+//		model.printYear( Language.DE , Style.KITCHEN );		
+//	}
+	
 	@Test
-	public void testPrintYear03() {
+	public void testPrintYear05() {
 		// create new model
 		CalendarModel model = new CalendarModel();
 		// create new year
@@ -38,19 +62,8 @@ public class CalendarModelTest {
 		// add holidays
 		model.addHolidays();
 		// print year
-		model.printYear( Language.EN , Style.CLASSIC );		
+		model.printYear( Language.DE , Style.JEDDI );		
 	}
-
-	@Test
-	public void testPrintYear04() {
-		// create new model
-		CalendarModel model = new CalendarModel();
-		// create new year
-		model.createYear( 2016 );
-		// add holidays
-		model.addHolidays();
-		// print year
-		model.printYear( Language.DE , Style.KITCHEN );		
-	}
+	
 
 }
