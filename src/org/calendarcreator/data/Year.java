@@ -3,12 +3,17 @@
  */
 package org.calendarcreator.data;
 
+
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  */
+@XmlRootElement
 public class Year {
 
 	/**
@@ -20,6 +25,20 @@ public class Year {
 	 * the list of months
 	 */
 	private Map<Integer,Month> collectionOfMonths;
+	
+	/**
+	 * No-arg default constructor
+	 */
+	public Year() {
+		// set year
+		this.year = 1970;
+		// evaluate leap year
+		boolean isLeapYear = evaluateIsLeapYear();
+		// evaluate offset
+		int offsetDayOfWeek = evaluateOffsetDayOfWeek();
+		// generate collection of months
+		this.collectionOfMonths = generateCollectionOfMonths( offsetDayOfWeek, isLeapYear );		
+	}
 	
 	/**
 	 * constructor
@@ -90,12 +109,14 @@ public class Year {
 		// return result
 		return collectionOfMonths;
 	}
-		
+	
+	@XmlElement( name = "yearInteger" )
 	public int getYear() {
 		return year;
 	}
-
+	
+	@XmlElement
 	public Map<Integer, Month> getCollectionOfMonths() {
 		return collectionOfMonths;
-	}
+	}	
 }

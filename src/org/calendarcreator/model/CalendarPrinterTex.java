@@ -46,8 +46,7 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 		return printedYear;
 	}
 
-	@Override
-	public String printMonth(Month month) {
+	protected String printMonth(Month month) {
 		// init string
 		String printedMonth = "";
 		// open month

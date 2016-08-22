@@ -7,6 +7,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlElement;
+
+
 /**
  *
  */
@@ -112,14 +115,17 @@ public class Month {
 		return collectionOfDays;
 	}
 
+	@XmlElement
 	public MonthOfYear getMonthOfYear() {
 		return monthOfYear;
 	}
 
+	@XmlElement
 	public Map<Integer,Day> getCollectionOfDays() {
 		return collectionOfDays;
 	}
 
+	@XmlElement
 	public int getLengthOfMonth() {
 		return lengthOfMonth;
 	}

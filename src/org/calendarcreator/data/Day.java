@@ -3,6 +3,8 @@
  */
 package org.calendarcreator.data;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  *
  */
@@ -44,6 +46,7 @@ public class Day {
 		this.weekOfYear = null;
 	}
 
+	@XmlElement
 	public int getDayOfMonth() {
 		return dayOfMonth;
 	}
@@ -52,6 +55,7 @@ public class Day {
 		this.dayOfMonth = dayOfMonth;
 	}
 
+	@XmlElement
 	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
@@ -60,6 +64,7 @@ public class Day {
 		this.dayOfWeek = dayOfWeek;
 	}
 
+	@XmlElement
 	public Holiday getHoliday() {
 		return holiday;
 	}
@@ -68,6 +73,7 @@ public class Day {
 		this.holiday = holiday;
 	}
 
+	@XmlElement
 	public String getEntry() {
 		return entry;
 	}
@@ -76,6 +82,7 @@ public class Day {
 		this.entry = entry;
 	}
 
+	@XmlElement
 	public Integer getWeekOfYear() {
 		return weekOfYear;
 	}

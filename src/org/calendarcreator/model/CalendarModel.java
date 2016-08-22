@@ -5,9 +5,11 @@ package org.calendarcreator.model;
 
 import java.util.Observable;
 
+import org.calendarcreator.data.Format;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
+import org.calendarcreator.io.CalendarWriter;
 
 /**
  * The 'Model' class in the MVC pattern. 
@@ -26,11 +28,23 @@ public class CalendarModel extends Observable {
 	private YearFactory yearFactory;
 	
 	/**
+	 * True if a year was created
+	 */
+	private boolean createdYear;
+	
+	/**
+	 * True if holidays were added
+	 */
+	private boolean addedHolidays;
+	
+	/**
 	 * Constructor
 	 */
 	public CalendarModel() {
 		this.year = null;
 		this.yearFactory = null;
+		this.createdYear = false;
+		this.addedHolidays = false;
 	}
 
 	/**
@@ -38,29 +52,102 @@ public class CalendarModel extends Observable {
 	 * @param year Year as integer
 	 */
 	public void createYear( int year ) {
-		this.yearFactory = new YearFactory();
+		yearFactory = new YearFactory();
 		this.year = yearFactory.createYear( year );
+		createdYear = true;
 	}
 
 	/**
 	 * Add holidays to the year hold as attribute
 	 */
 	public void addHolidays() {
-		if( yearFactory != null && year != null ) {
+		if( createdYear ) {
 			yearFactory.addHolidays( year );
+			addedHolidays = true;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param lang Language of translation
+	 * @param style Layout style of the printer class
+	 * @param filename Destination file
+	 * @return Success
+	 */
+	public boolean exportYearToTex( Language lang, Style style, String filename ) {
+		if( createdYear ) {
+			// create string
+			String printedYear = printYearTex( lang, style );
+			// create writer
+			CalendarWriter writer = new CalendarWriter();
+			// write file
+			return writer.writeToDisk( printedYear, filename, Format.TEX );
+		}
+		else {
+			return false;
 		}
 	}
 
 	/**
-	 * Print an already created year
-	 * @param language Language of translation
+	 * 
+	 * @param lang Language of translation
 	 * @param style Layout style of the printer class
+	 * @param filename Destination file
+	 * @return Success
 	 */
-	public void printYear( Language language, Style style ) {
+	public boolean exportYearToXml( String filename ) {
+		if( createdYear ) {
+			// create string
+			String printedYear = printYearXml();
+			// create writer
+			CalendarWriter writer = new CalendarWriter();
+			// write file
+			return writer.writeToDisk( printedYear, filename, Format.XML );
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Get year as integer
+	 * @return Year as integer
+	 */
+	public int getYear() {
+		return year.getYear();
+	}
+	
+	/**
+	 * True if year was created
+	 * @return true/false
+	 */
+	public boolean getCreatedYear() {
+		return createdYear;
+	}
+	
+	/**
+	 * True if holidays were added
+	 * @return true/false
+	 */
+	public boolean getAddedHolidays() {
+		return addedHolidays;
+	}
+
+	/**
+	 * Print an already created year as *.tex string
+	 * @param lang Language of translation
+	 * @param style Layout style of the printer class
+	 * @return *.tex string
+	 */
+	private String printYearTex( Language lang, Style style ) {
+		// init
+		String printedYear = null;
+		
+		// process
 		if( year != null ) {
 			// create translator
 			CalendarTranslator translator;
-			if( language == Language.DE ) {
+			if( lang == Language.DE ) {
 				translator = new CalendarTranslatorGerman();
 			}
 			else {
@@ -85,22 +172,30 @@ public class CalendarModel extends Observable {
 					printer = new CalendarPrinterTexClassic( translator );
 					break;
 			}
-			// print year
-			System.out.println( printer.printYear( year ) );
+			// create string
+			printedYear = printer.printYear( year );
 		}
+		
+		// return
+		return printedYear;
+	}
+	
+	/**
+	 * Print an already created year as *.xml string
+	 * @return *xml string
+	 */
+	private String printYearXml() {
+		// init
+		String printedYear = null;
+		// process
+		if( year != null ) {
+			// create printer
+			CalendarPrinter printer = new CalendarPrinterXml();
+			// create string
+			printedYear = printer.printYear( year );
+		}
+		// return
+		return printedYear;
 	}
 
-//	private String lastActionCommand;
-//
-//	public String getLastActionCommand() {
-//		return lastActionCommand;
-//	}
-//	
-//	public void setLastActionCommand( String lastActionCommand ) {
-//		// update variable
-//		this.lastActionCommand = lastActionCommand;
-//		// tell observer
-//		setChanged();
-//		notifyObservers( lastActionCommand );
-//	}
 }

@@ -53,17 +53,50 @@ public class CalendarModelTest {
 //		model.printYear( Language.DE , Style.KITCHEN );		
 //	}
 	
+//	@Test
+//	public void testPrintYear05() {
+//		// create new model
+//		CalendarModel model = new CalendarModel();
+//		// create new year
+//		model.createYear( 2016 );
+//		// add holidays
+//		model.addHolidays();
+//		// print year
+//		model.printYear( Language.DE , Style.JEDDI );		
+//	}
+	
 	@Test
-	public void testPrintYear05() {
+	public void testExportYearToTex() {
 		// create new model
 		CalendarModel model = new CalendarModel();
 		// create new year
 		model.createYear( 2016 );
 		// add holidays
 		model.addHolidays();
-		// print year
-		model.printYear( Language.DE , Style.JEDDI );		
+		// export year to *.tex
+		if( model.exportYearToTex( Language.DE , Style.JEDDI, "/tmp/2016.tex" ) ) {
+			System.out.println( "Success!" );
+		}
+		else {
+			System.out.println( "Failure" );
+		}	
 	}
-	
+
+	@Test
+	public void testExportYearToXml() {
+		// create new model
+		CalendarModel model = new CalendarModel();
+		// create new year
+		model.createYear( 2016 );
+		// add holidays
+		model.addHolidays();
+		// export year to *.tex
+		if( model.exportYearToXml( "/tmp/2016.xml" ) ) {
+			System.out.println( "Success!" );
+		}
+		else {
+			System.out.println( "Failure" );
+		}	
+	}
 
 }
