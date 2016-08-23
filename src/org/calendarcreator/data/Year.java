@@ -4,22 +4,22 @@
 package org.calendarcreator.data;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  *
  */
-@XmlRootElement
 public class Year {
 
 	/**
 	 * the year
 	 */
-	private int year;
+	private int yearInteger;
 	
 	/**
 	 * the list of months
@@ -27,25 +27,11 @@ public class Year {
 	private Map<Integer,Month> collectionOfMonths;
 	
 	/**
-	 * No-arg default constructor
-	 */
-	public Year() {
-		// set year
-		this.year = 1970;
-		// evaluate leap year
-		boolean isLeapYear = evaluateIsLeapYear();
-		// evaluate offset
-		int offsetDayOfWeek = evaluateOffsetDayOfWeek();
-		// generate collection of months
-		this.collectionOfMonths = generateCollectionOfMonths( offsetDayOfWeek, isLeapYear );		
-	}
-	
-	/**
 	 * constructor
 	 */
-	public Year( int year ) {
+	public Year( int yearInteger ) {
 		// save year
-		this.year = year;
+		this.yearInteger = yearInteger;
 		// evaluate leap year
 		boolean isLeapYear = evaluateIsLeapYear();
 		// evaluate offset
@@ -59,9 +45,9 @@ public class Year {
 	 */
 	private boolean evaluateIsLeapYear() {
 		// divisible by 400
-		boolean result = ( year % 400 == 0 );
+		boolean result = ( yearInteger % 400 == 0 );
 		// or divisible by 4, but not by 100
-		result = result || ( ( year % 4 == 0 ) && !( year % 100 == 0 ) );
+		result = result || ( ( yearInteger % 4 == 0 ) && !( yearInteger % 100 == 0 ) );
 		// return result
 		return result; 
 	}
@@ -71,12 +57,12 @@ public class Year {
 	 */
 	private int evaluateOffsetDayOfWeek() {
 		// evaluate
-		int os1 = ( year - 1 ) / 4;
-		int os2 = ( year - 1 ) / 100;
-		int os3 = ( year - 1 ) / 400;
+		int os1 = ( yearInteger - 1 ) / 4;
+		int os2 = ( yearInteger - 1 ) / 100;
+		int os3 = ( yearInteger - 1 ) / 400;
 		
 		// return result
-		return ( year + os1 - os2 + os3 - 1 ) % 7;
+		return ( yearInteger + os1 - os2 + os3 - 1 ) % 7;
 	}
 	
 	/**
@@ -110,13 +96,24 @@ public class Year {
 		return collectionOfMonths;
 	}
 	
-	@XmlElement( name = "yearInteger" )
-	public int getYear() {
-		return year;
+	public int getYearInteger() {
+		return yearInteger;
 	}
 	
-	@XmlElement
 	public Map<Integer, Month> getCollectionOfMonths() {
 		return collectionOfMonths;
-	}	
+		
+	}
+	
+	public List<Month> getListOfMonths() {
+		// init
+		List<Month> listOfMonths = new ArrayList<Month>();
+		// create
+		Set<Entry<Integer,Month>> months = collectionOfMonths.entrySet();
+		for( Entry<Integer,Month> month : months ) {
+			listOfMonths.add( month.getValue() );
+		}
+		// return
+		return listOfMonths;
+	}
 }

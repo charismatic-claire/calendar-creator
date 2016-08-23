@@ -29,7 +29,7 @@ public class CalendarPrinterLandscape implements CalendarPrinter {
 		// init string
 		String printedYear = "";
 		// add header
-		printedYear += "-------- " + year.getYear() + " --------\n\n";
+		printedYear += "-------- " + year.getYearInteger() + " --------\n\n";
 		// loop month
 		Set<Entry<Integer,Month>> months = year.getCollectionOfMonths().entrySet();
 		for( Entry<Integer,Month> month : months ) {

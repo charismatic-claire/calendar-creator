@@ -55,7 +55,7 @@ public class YearTest {
 	 */
 	@Test
 	public void testGetYear() {
-		System.out.println( year.getYear() );
+		System.out.println( year.getYearInteger() );
 	}
 
 	/**

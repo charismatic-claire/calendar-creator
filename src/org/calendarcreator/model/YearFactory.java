@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.calendarcreator.data.Date;
+import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Holiday;
 import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Year;
+import org.calendarcreator.data.YearXml;
 
 import java.util.Set;
 
@@ -29,8 +31,8 @@ public class YearFactory {
 	/**
 	 * Create a year
 	 */
-	public Year createYear( int year ) {
-		return new Year( year );
+	public Year createYear( int yearInteger ) {
+		return new Year( yearInteger );
 	}
 	
 	/**
@@ -47,24 +49,96 @@ public class YearFactory {
 			setHolidayOfDate( entry.getValue(), entry.getKey() );
 		}
 	}
+	
+	/**
+	 * Set the entry of a specific date 
+	 */
+	public void addEntry( Year year, Date date ) {
+		// save year
+		this.year = year;
+		// add entry
+		getDayOfDate( date ).setEntry( date.getEntry() );
+	}
+	
+	/**
+	 * Set the entry of a specific date 
+	 */
+	public void addEntries( Year year, Dates dates ) {
+		// save year
+		this.year = year;
+		// add entries
+		for( Date date: dates.getListOfDates() ) {
+			getDayOfDate( date ).setEntry( date.getEntry() );
+		}
+	}
+
+	/**
+	 * Transform a Year to a YearXml 
+	 */
+	public YearXml createYearXml( Year year ) {
+		// save the year
+		this.year = year;
+		// create new year xml 
+		YearXml yearXml = new YearXml();
+		// set the year integer
+		yearXml.setYearInteger( year.getYearInteger() );
+		// set the added holidays flag
+		if( getHolidayOfDate( new Date( 1, 1 ) ) != null ) {
+			yearXml.setAddedHolidays( true );
+		}
+		// generate dates
+		Dates dates = new Dates();
+		for( Month month : year.getListOfMonths() ) {
+			for( Day day : month.getListOfDays() ) {
+				String entry = day.getEntry();
+				if( entry != null ) {
+					Date date = dayAndMonth2date( month, day );
+					date.setEntry( entry );
+					dates.addDate( date );
+				}
+			}
+		}
+		// add dates
+		yearXml.setDates( dates );
+		// set the added entries flag
+		if( ! dates.getListOfDates().isEmpty() ) {
+			yearXml.setAddedEntries( true );
+		}
+		// return result
+		return yearXml;
+	}
+
+	/**
+	 * Get a specific day from a year
+	 */
+	private Day getDayOfDate( Date date ) {
+		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
+		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
+		return day;
+	}
+
+	/**
+	 * Get day of week of a specific date
+	 */
+	private DayOfWeek getDayOfWeekOfDate( Date date ) {
+		return getDayOfDate( date ).getDayOfWeek();
+	}
+	
+	/**
+	 * Get holiday of a specific date
+	 */
+	
+	private Holiday getHolidayOfDate( Date date ) {
+		return getDayOfDate( date ).getHoliday();
+	}
 
 	/**
 	 * Set holiday of a specific date
 	 */
 	private void setHolidayOfDate( Date date, Holiday holiday ) {
-		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
-		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
-		day.setHoliday( holiday );
+		getDayOfDate( date ).setHoliday( holiday );
 	}
 	
-	/**
-	 * Get day of week of a specific date
-	 */
-	private DayOfWeek getDayOfWeekOfDate( Date date ) {
-		Month month = year.getCollectionOfMonths().get( date.getMonthOfYear() );
-		Day day = month.getCollectionOfDays().get( date.getDayOfMonth() );
-		return day.getDayOfWeek();
-	}
 	
 	private Map<Holiday,Date> evaluateDatesOfHolidays() {
 		// initialize
@@ -132,7 +206,7 @@ public class YearFactory {
 	 */
 	private Date evaluateDateOfEasterDay() {
 		// the year
-		int x = year.getYear();
+		int x = year.getYearInteger();
 		// secondary number
 		int k = x / 100;
 		// secondary moon phase
@@ -195,5 +269,12 @@ public class YearFactory {
 		
 		// return result
 		return new Date( monthOfYear, dayOfMonth );
+	}
+	
+	/**
+	 * transform a Day into a Date
+	 */
+	private Date dayAndMonth2date( Month month, Day day ) {
+		return new Date( month.getMonthOfYearInteger(), day.getDayOfMonth() );
 	}
 }

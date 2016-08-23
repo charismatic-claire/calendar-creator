@@ -16,12 +16,24 @@ public class Date {
 	
 	private String entry;
 	
+	public Date() {
+		this.monthOfYear = 0;
+		this.dayOfMonth = 0;
+		this.entry = null;
+	}
+	
 	public Date( int monthOfYear, int dayOfMonth ) {
 		this.monthOfYear = monthOfYear;
 		this.dayOfMonth = dayOfMonth;
 	}
+	
+	public Date( int monthOfYear, int dayOfMonth, String entry ) {
+		this.monthOfYear = monthOfYear;
+		this.dayOfMonth = dayOfMonth;
+		this.entry = entry;
+	}
 
-	@XmlElement( name = "monthOfYear" )
+	@XmlElement
 	public int getMonthOfYear() {
 		return monthOfYear;
 	}
@@ -30,7 +42,7 @@ public class Date {
 		this.monthOfYear = monthOfYear;
 	}
 	
-	@XmlElement( name = "dayOfWeek" )
+	@XmlElement
 	public int getDayOfMonth() {
 		return dayOfMonth;
 	}
@@ -39,7 +51,7 @@ public class Date {
 		this.dayOfMonth = dayOfMonth;
 	}
 
-	@XmlElement( name = "entry" )
+	@XmlElement
 	public String getEntry() {
 		return entry;
 	}

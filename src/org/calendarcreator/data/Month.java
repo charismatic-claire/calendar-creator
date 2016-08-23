@@ -3,12 +3,13 @@
  */
 package org.calendarcreator.data;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.annotation.XmlElement;
-
+import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  *
@@ -115,17 +116,36 @@ public class Month {
 		return collectionOfDays;
 	}
 
-	@XmlElement
 	public MonthOfYear getMonthOfYear() {
 		return monthOfYear;
 	}
+	
+	public int getMonthOfYearInteger() {
+		int monthOfYearInteger = 0;
+		for( int i=0; i < 12; i++ ) {
+			if( monthsOfYear[i] == monthOfYear ) {
+				monthOfYearInteger = i+1;
+			}
+		}
+		return monthOfYearInteger;
+	}
 
-	@XmlElement
 	public Map<Integer,Day> getCollectionOfDays() {
 		return collectionOfDays;
 	}
+	
+	public List<Day> getListOfDays() {
+		// init
+		List<Day> listOfDays = new ArrayList<Day>();
+		// create
+		Set<Entry<Integer,Day>> days = collectionOfDays.entrySet();
+		for( Entry<Integer,Day> day : days ) {
+			listOfDays.add( day.getValue() );
+		}
+		// return
+		return listOfDays;
+	}
 
-	@XmlElement
 	public int getLengthOfMonth() {
 		return lengthOfMonth;
 	}

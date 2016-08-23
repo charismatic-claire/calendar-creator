@@ -3,9 +3,6 @@
  */
 package org.calendarcreator.model;
 
-import java.util.Set;
-import java.util.Map.Entry;
-
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Month;
@@ -35,10 +32,9 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 		// open document
 		printedYear += "%% content\n" +
 				"\\begin{document}\n\n";
-		// print month
-		Set<Entry<Integer,Month>> months = year.getCollectionOfMonths().entrySet();
-		for( Entry<Integer,Month> month : months ) {
-			printedYear += printMonth( month.getValue() );
+		// print months
+		for( Month month : year.getListOfMonths() ) {
+			printedYear += printMonth( month );
 		}
 		// close document
 		printedYear += "\\end{document}\n";
@@ -52,11 +48,9 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 		// open month
 		printedMonth += "\\begin{calmonth}{" +
 				printMonthOfYear( month ) + "}\n";
-		// loop days
-		Set<Entry<Integer,Day>> days = month.getCollectionOfDays().entrySet();
-		for( Entry<Integer,Day> day : days ) {
-			// print day
-			printedMonth += "	" + printDay( day.getValue() );
+		// print days
+		for( Day day : month.getListOfDays() ) {
+			printedMonth += "	" + printDay( day );
 		}
 		// close month
 		printedMonth += "\\end{calmonth}\n\n";
@@ -181,7 +175,7 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 				"\\pagestyle{fancy}\n" +
 				"\\fancyhf{}\n" +
 				"\\renewcommand{\\headrulewidth}{0pt}\n" +
-				"\\fancyhf[FC]{{\\scriptsize -- " + year.getYear() + " --}}\n\n";
+				"\\fancyhf[FC]{{\\scriptsize -- " + year.getYearInteger() + " --}}\n\n";
 		// return
 		return printedFooter;
 	}

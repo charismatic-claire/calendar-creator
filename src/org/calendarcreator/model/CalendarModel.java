@@ -5,6 +5,8 @@ package org.calendarcreator.model;
 
 import java.util.Observable;
 
+import org.calendarcreator.data.Date;
+import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Format;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.Style;
@@ -38,6 +40,11 @@ public class CalendarModel extends Observable {
 	private boolean addedHolidays;
 	
 	/**
+	 * True if entries were added
+	 */
+	private boolean addedEntries;
+	
+	/**
 	 * Constructor
 	 */
 	public CalendarModel() {
@@ -45,15 +52,16 @@ public class CalendarModel extends Observable {
 		this.yearFactory = null;
 		this.createdYear = false;
 		this.addedHolidays = false;
+		this.addedEntries = false;
 	}
 
 	/**
 	 * Create a new year and hold it as private attribute
 	 * @param year Year as integer
 	 */
-	public void createYear( int year ) {
+	public void createYear( int yearInteger ) {
 		yearFactory = new YearFactory();
-		this.year = yearFactory.createYear( year );
+		this.year = yearFactory.createYear( yearInteger );
 		createdYear = true;
 	}
 
@@ -64,6 +72,25 @@ public class CalendarModel extends Observable {
 		if( createdYear ) {
 			yearFactory.addHolidays( year );
 			addedHolidays = true;
+		}
+	}
+	
+	/**
+	 * Add entry to the year hold as an attribute
+	 */
+	public void addEntry( Date date ) {
+		if( createdYear && date.getEntry() != null ) {
+			yearFactory.addEntry( year, date );
+			addedEntries = true;
+		}
+	}
+	
+	/**
+	 * Add entries to the year hold as an attribute
+	 */
+	public void addEntries( Dates dates ) {
+		for( Date date : dates.getListOfDates() ) {
+			addEntry( date );
 		}
 	}
 	
@@ -113,8 +140,8 @@ public class CalendarModel extends Observable {
 	 * Get year as integer
 	 * @return Year as integer
 	 */
-	public int getYear() {
-		return year.getYear();
+	public int getYearInteger() {
+		return year.getYearInteger();
 	}
 	
 	/**
@@ -133,6 +160,9 @@ public class CalendarModel extends Observable {
 		return addedHolidays;
 	}
 
+	public boolean getAddedEntries() {
+		return addedEntries;
+	}
 	/**
 	 * Print an already created year as *.tex string
 	 * @param lang Language of translation
@@ -182,7 +212,7 @@ public class CalendarModel extends Observable {
 	
 	/**
 	 * Print an already created year as *.xml string
-	 * @return *xml string
+	 * @return *.xml string
 	 */
 	private String printYearXml() {
 		// init
