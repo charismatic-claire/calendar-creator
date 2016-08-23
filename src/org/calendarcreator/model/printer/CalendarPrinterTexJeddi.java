@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.printer;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Week;
+import org.calendarcreator.model.WeekFactory;
+import org.calendarcreator.model.translator.CalendarTranslator;
 
 /**
  *

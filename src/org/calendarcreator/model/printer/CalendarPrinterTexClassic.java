@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.printer;
+
+import org.calendarcreator.model.translator.CalendarTranslator;
 
 /**
  *

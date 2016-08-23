@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.translator;
 
 import java.util.HashMap;
 import java.util.Map;

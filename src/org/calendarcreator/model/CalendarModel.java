@@ -9,9 +9,21 @@ import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Format;
 import org.calendarcreator.data.Language;
+import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
+import org.calendarcreator.io.CalendarReader;
 import org.calendarcreator.io.CalendarWriter;
+import org.calendarcreator.model.printer.CalendarPrinter;
+import org.calendarcreator.model.printer.CalendarPrinterLandscape;
+import org.calendarcreator.model.printer.CalendarPrinterPortrait;
+import org.calendarcreator.model.printer.CalendarPrinterTexClassic;
+import org.calendarcreator.model.printer.CalendarPrinterTexJeddi;
+import org.calendarcreator.model.printer.CalendarPrinterTexKitchen;
+import org.calendarcreator.model.printer.CalendarPrinterXml;
+import org.calendarcreator.model.translator.CalendarTranslator;
+import org.calendarcreator.model.translator.CalendarTranslatorEnglish;
+import org.calendarcreator.model.translator.CalendarTranslatorGerman;
 
 /**
  * The 'Model' class in the MVC pattern. 
@@ -49,7 +61,7 @@ public class CalendarModel extends Observable {
 	 */
 	public CalendarModel() {
 		this.year = null;
-		this.yearFactory = null;
+		this.yearFactory = new YearFactory();
 		this.createdYear = false;
 		this.addedHolidays = false;
 		this.addedEntries = false;
@@ -60,9 +72,8 @@ public class CalendarModel extends Observable {
 	 * @param year Year as integer
 	 */
 	public void createYear( int yearInteger ) {
-		yearFactory = new YearFactory();
 		this.year = yearFactory.createYear( yearInteger );
-		createdYear = true;
+		updateModelConfiguration();
 	}
 
 	/**
@@ -71,7 +82,7 @@ public class CalendarModel extends Observable {
 	public void addHolidays() {
 		if( createdYear ) {
 			yearFactory.addHolidays( year );
-			addedHolidays = true;
+			updateModelConfiguration();
 		}
 	}
 	
@@ -81,7 +92,7 @@ public class CalendarModel extends Observable {
 	public void addEntry( Date date ) {
 		if( createdYear && date.getEntry() != null ) {
 			yearFactory.addEntry( year, date );
-			addedEntries = true;
+			updateModelConfiguration();
 		}
 	}
 	
@@ -137,32 +148,53 @@ public class CalendarModel extends Observable {
 	}
 	
 	/**
-	 * Get year as integer
-	 * @return Year as integer
+	 * Import year from *.xml file
 	 */
-	public int getYearInteger() {
-		return year.getYearInteger();
+	public boolean importYearFromXml( String filename ) {
+		CalendarReader reader = new CalendarReader();
+		CalendarImporter importer = new CalendarImporter();
+		try {
+			String data = reader.readFromDisk( filename );
+			year = importer.importYearFromString( data );
+			updateModelConfiguration();
+		}
+		catch( Exception e ) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
-	 * True if year was created
-	 * @return true/false
+	 * Returns the actual state of the model, will be used by the controller
+	 * @return modelConfiguration
 	 */
-	public boolean getCreatedYear() {
-		return createdYear;
-	}
-	
-	/**
-	 * True if holidays were added
-	 * @return true/false
-	 */
-	public boolean getAddedHolidays() {
-		return addedHolidays;
+	public ModelConfiguration getModelConfiguration() {
+		ModelConfiguration modelConfiguration = new ModelConfiguration();
+		modelConfiguration.setYear( year );
+		modelConfiguration.setCreatedYear( createdYear );
+		modelConfiguration.setAddedHolidays( addedHolidays );
+		modelConfiguration.setAddedEntries( addedEntries );
+		return modelConfiguration;
 	}
 
-	public boolean getAddedEntries() {
-		return addedEntries;
+	/**
+	 * Update state of the model
+	 */
+	private void updateModelConfiguration() {
+		// init
+		createdYear = false;
+		addedHolidays = false;
+		addedEntries = false;
+		if( year != null ) {
+			// set createdYear
+			createdYear = true;
+			// set addedHolidays
+			addedHolidays = yearFactory.isAddedHolidays( year );
+			// set addedEntries
+			addedEntries = yearFactory.isAddedEntries( year );
+		}
 	}
+	
 	/**
 	 * Print an already created year as *.tex string
 	 * @param lang Language of translation

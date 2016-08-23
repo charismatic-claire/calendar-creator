@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.printer;
 
 import java.io.StringWriter;
 

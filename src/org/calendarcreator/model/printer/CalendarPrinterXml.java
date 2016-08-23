@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.printer;
 
 import java.io.StringWriter;
 
@@ -9,6 +9,7 @@ import javax.xml.bind.JAXB;
 
 import org.calendarcreator.data.Year;
 import org.calendarcreator.data.YearXml;
+import org.calendarcreator.model.YearFactory;
 
 /**
  *

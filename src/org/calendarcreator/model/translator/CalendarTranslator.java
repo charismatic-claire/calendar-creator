@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.translator;
 
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Holiday;

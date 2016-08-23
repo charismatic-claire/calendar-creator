@@ -4,7 +4,7 @@ package org.calendarcreator.tests;
 
 import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
-import org.calendarcreator.model.DatesPrinter;
+import org.calendarcreator.model.printer.DatesPrinter;
 import org.junit.Test;
 
 public class DatesPrinterTest {

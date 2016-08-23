@@ -6,9 +6,9 @@ package org.calendarcreator.tests;
 //import static org.junit.Assert.*;
 
 import org.calendarcreator.data.Year;
-import org.calendarcreator.model.CalendarPrinter;
-import org.calendarcreator.model.CalendarPrinterXml;
 import org.calendarcreator.model.YearFactory;
+import org.calendarcreator.model.printer.CalendarPrinter;
+import org.calendarcreator.model.printer.CalendarPrinterXml;
 import org.junit.Test;
 
 /**

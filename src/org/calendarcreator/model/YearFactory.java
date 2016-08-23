@@ -83,9 +83,7 @@ public class YearFactory {
 		// set the year integer
 		yearXml.setYearInteger( year.getYearInteger() );
 		// set the added holidays flag
-		if( getHolidayOfDate( new Date( 1, 1 ) ) != null ) {
-			yearXml.setAddedHolidays( true );
-		}
+		yearXml.setAddedHolidays( isAddedHolidays( year ) );
 		// generate dates
 		Dates dates = new Dates();
 		for( Month month : year.getListOfMonths() ) {
@@ -101,11 +99,36 @@ public class YearFactory {
 		// add dates
 		yearXml.setDates( dates );
 		// set the added entries flag
-		if( ! dates.getListOfDates().isEmpty() ) {
-			yearXml.setAddedEntries( true );
-		}
+		yearXml.setAddedEntries( isAddedEntries( year ) );
 		// return result
 		return yearXml;
+	}
+	
+	/**
+	 * Added holidays to year?
+	 */
+	public boolean isAddedHolidays( Year year ) {
+		// save year
+		this.year = year;
+		// evaluate 
+		return getHolidayOfDate( new Date( 1, 1 ) ) != null;
+	}
+	
+	/**
+	 * Added entries to year?
+	 */
+	public boolean isAddedEntries( Year year ) {
+		// save year
+		this.year = year;
+		// evaluate
+		for( Month month : year.getListOfMonths() ) {
+			for( Day day : month.getListOfDays() ) {
+				if( day.getEntry() != null ) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

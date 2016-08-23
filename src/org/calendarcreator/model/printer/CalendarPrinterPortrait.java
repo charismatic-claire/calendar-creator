@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.model;
+package org.calendarcreator.model.printer;
 
 import java.util.Set;
 import java.util.Map.Entry;
@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Year;
+import org.calendarcreator.model.translator.CalendarTranslator;
 
 /**
  *
