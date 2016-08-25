@@ -53,14 +53,14 @@ public class CalendarModelTest {
 		model.addEntry( new Date( 5, 8, "Liberation Day") );
 		model.updateYear( 2017 );
 		// test
-		assertEquals( model.getYear().getYearInteger(), 2017 );
+		assertEquals( model.getModelConfiguration().getYear().getYearInteger(), 2017 );
 		assertTrue( model.getModelConfiguration().isAddedHolidays() );
 		assertTrue( model.getModelConfiguration().isAddedEntries() );
-		Month month = model.getYear().getCollectionOfMonths().get( 5 );
+		Month month = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 5 );
 		Day day = month.getCollectionOfDays().get( 8 );
 		assertEquals( day.getEntry(), "Liberation Day" );
 		// print
-		System.out.println( "update year:\t\t" + model.getYear().getYearInteger() );
+		System.out.println( "update year:\t\t" + model.getModelConfiguration().getYear().getYearInteger() );
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class CalendarModelTest {
 		// do
 		model.addEntry( new Date( 5, 8, "Liberation Day" ) );
 		// print
-		Month month = model.getYear().getCollectionOfMonths().get( 5 );
+		Month month = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 5 );
 		Day day = month.getCollectionOfDays().get( 8 );
 		System.out.println( "add entry:\t\t" + day.getEntry() );
 		// test
@@ -125,13 +125,13 @@ public class CalendarModelTest {
 		model.addEntries( dates );
 		// test
 		assertTrue( model.getModelConfiguration().isAddedEntries() );
-		Month month1 = model.getYear().getCollectionOfMonths().get( 1 );
+		Month month1 = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 1 );
 		Day day1 = month1.getCollectionOfDays().get( 1 );
-		Month month2 = model.getYear().getCollectionOfMonths().get( 2 );
+		Month month2 = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 2 );
 		Day day2 = month2.getCollectionOfDays().get( 2 );
-		Month month3 = model.getYear().getCollectionOfMonths().get( 3 );
+		Month month3 = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 3 );
 		Day day3 = month3.getCollectionOfDays().get( 3 );
-		Month month4 = model.getYear().getCollectionOfMonths().get( 4 );
+		Month month4 = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 4 );
 		Day day4 = month4.getCollectionOfDays().get( 4 );
 		assertEquals( day1.getEntry(), "One" );
 		assertEquals( day2.getEntry(), "Two" );
@@ -209,12 +209,12 @@ public class CalendarModelTest {
 		assertTrue( model.getModelConfiguration().isCreatedYear() );
 		assertTrue( model.getModelConfiguration().isAddedHolidays() );
 		assertTrue( model.getModelConfiguration().isCreatedYear() );
-		assertEquals( model.getYear().getYearInteger(), 2016 );
-		Month month = model.getYear().getCollectionOfMonths().get( 5 );
+		assertEquals( model.getModelConfiguration().getYear().getYearInteger(), 2016 );
+		Month month = model.getModelConfiguration().getYear().getCollectionOfMonths().get( 5 );
 		Day day = month.getCollectionOfDays().get( 8 );
 		assertEquals( day.getEntry(), "Liberation Day" );
 		// print
-		System.out.println( "import year from xml:\t" + model.getYear().getYearInteger() );
+		System.out.println( "import year from xml:\t" + model.getModelConfiguration().getYear().getYearInteger() );
 	}
 
 }

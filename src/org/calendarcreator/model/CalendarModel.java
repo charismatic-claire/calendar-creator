@@ -30,7 +30,7 @@ import org.calendarcreator.model.translator.CalendarTranslatorGerman;
  * The 'Model' class in the MVC pattern. 
  * Perform actions on years.
  */
-public class CalendarModel extends Observable {
+public class CalendarModel extends Observable implements CalendarModelInterface {
 
 	/**
 	 * Year, collection of weeks
@@ -56,9 +56,9 @@ public class CalendarModel extends Observable {
 	 * True if entries were added
 	 */
 	private boolean addedEntries;
-	
+
 	/**
-	 * Constructor
+	 * Constructor with no arguments
 	 */
 	public CalendarModel() {
 		this.year = null;
@@ -68,19 +68,13 @@ public class CalendarModel extends Observable {
 		this.addedEntries = false;
 	}
 
-	/**
-	 * Create a new year and hold it as private attribute
-	 * @param year Year as integer
-	 */
+	@Override
 	public void createYear( int yearInteger ) {
 		this.year = yearFactory.createYear( yearInteger );
 		updateModelConfiguration();
 	}
 	
-	/**
-	 * Change the year, leaving all the other configurations
-	 * unchanged. Good for import and export of entries.
-	 */
+	@Override
 	public void updateYear( int yearInteger ) {
 		if( createdYear ) {
 			// init 
@@ -96,9 +90,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Remove the current year, if existent
-	 */
+	@Override
 	public void removeYear() {
 		if( createdYear ) {
 			year = null;
@@ -106,9 +98,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 
-	/**
-	 * Add holidays to the year hold as attribute
-	 */
+	@Override
 	public void addHolidays() {
 		if( createdYear ) {
 			yearFactory.addHolidays( year );
@@ -116,9 +106,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Remove all the holidays
-	 */
+	@Override
 	public void removeHolidays() {
 		if( createdYear ) {
 			// init 
@@ -134,9 +122,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Add entry to the year hold as an attribute
-	 */
+	@Override
 	public void addEntry( Date date ) {
 		if( createdYear && date.getEntry() != null ) {
 			yearFactory.addEntry( year, date );
@@ -144,9 +130,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Remove specific entry
-	 */
+	@Override
 	public void removeEntry( Date date ) {
 		if( addedEntries ) {
 			yearFactory.removeEntry( year, date );
@@ -154,18 +138,14 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Add entries to the year hold as an attribute
-	 */
+	@Override
 	public void addEntries( Dates dates ) {
 		for( Date date : dates.getListOfDates() ) {
 			addEntry( date );
 		}
 	}
 	
-	/**
-	 * Remove all entries
-	 */
+	@Override
 	public void removeEntries() {
 		if( createdYear ) {
 			// init 
@@ -181,13 +161,7 @@ public class CalendarModel extends Observable {
 		}		
 	}
 	
-	/**
-	 * 
-	 * @param lang Language of translation
-	 * @param style Layout style of the printer class
-	 * @param filename Destination file
-	 * @return Success
-	 */
+	@Override
 	public boolean exportYearToTex( Language lang, Style style, String filename ) {
 		if( createdYear ) {
 			// create string
@@ -202,13 +176,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 
-	/**
-	 * 
-	 * @param lang Language of translation
-	 * @param style Layout style of the printer class
-	 * @param filename Destination file
-	 * @return Success
-	 */
+	@Override
 	public boolean exportYearToConfigXml( String filename ) {
 		if( createdYear ) {
 			// create string
@@ -223,9 +191,7 @@ public class CalendarModel extends Observable {
 		}
 	}
 	
-	/**
-	 * Import year from *.xml file
-	 */
+	@Override
 	public boolean importYearFromConfigXml( String filename ) {
 		CalendarReader reader = new CalendarReader();
 		CalendarImportExport importer = new CalendarImportExport();
@@ -240,17 +206,7 @@ public class CalendarModel extends Observable {
 		return true;
 	}
 	
-	/**
-	 * Get year
-	 */
-	public Year getYear() {
-		return year;
-	}
-	
-	/**
-	 * Returns the actual state of the model, will be used by the controller
-	 * @return modelConfiguration
-	 */
+	@Override
 	public ModelConfiguration getModelConfiguration() {
 		ModelConfiguration modelConfiguration = new ModelConfiguration();
 		modelConfiguration.setYear( year );
