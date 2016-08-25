@@ -6,7 +6,7 @@ package org.calendarcreator.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.calendarcreator.model.CalendarModel;
+import org.calendarcreator.model.CalendarModelFull;
 import org.calendarcreator.view.CalendarView;
 
 /**
@@ -17,7 +17,7 @@ public class MenuItemListener extends CalendarController implements ActionListen
 	/**
 	 * Constructor
 	 */
-	public MenuItemListener(CalendarModel model, CalendarView view) {
+	public MenuItemListener(CalendarModelFull model, CalendarView view) {
 		super(model, view);
 	}
 

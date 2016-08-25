@@ -4,7 +4,7 @@
 package org.calendarcreator;
 
 import org.calendarcreator.controller.MenuItemListener;
-import org.calendarcreator.model.CalendarModel;
+import org.calendarcreator.model.CalendarModelFull;
 import org.calendarcreator.view.CalendarView;
 
 /**
@@ -17,7 +17,7 @@ public class CalendarMain {
 	 */
 	public static void main(String[] args) {
 		// create model
-		CalendarModel model = new CalendarModel();
+		CalendarModelFull model = new CalendarModelFull();
 		// create view
 		CalendarView view = new CalendarView();
 		// create controller

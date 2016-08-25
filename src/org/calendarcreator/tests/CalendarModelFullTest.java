@@ -13,20 +13,20 @@ import org.calendarcreator.data.Day;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
-import org.calendarcreator.model.CalendarModel;
+import org.calendarcreator.model.CalendarModelFull;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class CalendarModelTest {
+public class CalendarModelFullTest {
 	
-	private static CalendarModel model;
+	private static CalendarModelFull model;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		model = new CalendarModel();
+		model = new CalendarModelFull();
 	}
 
 	@AfterClass
