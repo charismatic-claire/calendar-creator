@@ -70,8 +70,10 @@ public class CalendarModel extends Observable implements CalendarModelInterface 
 
 	@Override
 	public void createYear( int yearInteger ) {
-		this.year = yearFactory.createYear( yearInteger );
-		updateModelConfiguration();
+		if( !( createdYear ) ) {
+			this.year = yearFactory.createYear( yearInteger );
+			updateModelConfiguration();			
+		}
 	}
 	
 	@Override
@@ -100,7 +102,7 @@ public class CalendarModel extends Observable implements CalendarModelInterface 
 
 	@Override
 	public void addHolidays() {
-		if( createdYear ) {
+		if( createdYear && !( addedHolidays ) ) {
 			yearFactory.addHolidays( year );
 			updateModelConfiguration();
 		}
@@ -108,7 +110,7 @@ public class CalendarModel extends Observable implements CalendarModelInterface 
 	
 	@Override
 	public void removeHolidays() {
-		if( createdYear ) {
+		if( createdYear && addedHolidays ) {
 			// init 
 			CalendarImportExport cie = new CalendarImportExport();
 			// create year config
@@ -124,15 +126,17 @@ public class CalendarModel extends Observable implements CalendarModelInterface 
 	
 	@Override
 	public void addEntry( Date date ) {
-		if( createdYear && date.getEntry() != null ) {
-			yearFactory.addEntry( year, date );
-			updateModelConfiguration();
+		if( createdYear ) {
+			if( date.getEntry() != null ) {
+				yearFactory.addEntry( year, date );
+				updateModelConfiguration();
+			}
 		}
 	}
 	
 	@Override
 	public void removeEntry( Date date ) {
-		if( addedEntries ) {
+		if( createdYear && addedEntries ) {
 			yearFactory.removeEntry( year, date );
 			updateModelConfiguration();
 		}
@@ -147,7 +151,7 @@ public class CalendarModel extends Observable implements CalendarModelInterface 
 	
 	@Override
 	public void removeEntries() {
-		if( createdYear ) {
+		if( createdYear && addedEntries ) {
 			// init 
 			CalendarImportExport cie = new CalendarImportExport();
 			// create year config
