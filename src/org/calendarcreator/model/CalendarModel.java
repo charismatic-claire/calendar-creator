@@ -12,6 +12,7 @@ import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
+import org.calendarcreator.data.YearConfig;
 import org.calendarcreator.io.CalendarReader;
 import org.calendarcreator.io.CalendarWriter;
 import org.calendarcreator.model.printer.CalendarPrinter;
@@ -20,7 +21,7 @@ import org.calendarcreator.model.printer.CalendarPrinterPortrait;
 import org.calendarcreator.model.printer.CalendarPrinterTexClassic;
 import org.calendarcreator.model.printer.CalendarPrinterTexJeddi;
 import org.calendarcreator.model.printer.CalendarPrinterTexKitchen;
-import org.calendarcreator.model.printer.CalendarPrinterXml;
+import org.calendarcreator.model.printer.CalendarPrinterConfigXml;
 import org.calendarcreator.model.translator.CalendarTranslator;
 import org.calendarcreator.model.translator.CalendarTranslatorEnglish;
 import org.calendarcreator.model.translator.CalendarTranslatorGerman;
@@ -75,6 +76,35 @@ public class CalendarModel extends Observable {
 		this.year = yearFactory.createYear( yearInteger );
 		updateModelConfiguration();
 	}
+	
+	/**
+	 * Change the year, leaving all the other configurations
+	 * unchanged. Good for import and export of entries.
+	 */
+	public void updateYear( int yearInteger ) {
+		if( createdYear ) {
+			// init 
+			CalendarImportExport cie = new CalendarImportExport();
+			// create year config
+			YearConfig yearConfig = cie.year2YearConfig( year );
+			// update configuration
+			yearConfig.setYearInteger( yearInteger );;
+			// import it
+			year = cie.yearConfig2Year( yearConfig );
+			// update
+			updateModelConfiguration();
+		}
+	}
+	
+	/**
+	 * Remove the current year, if existent
+	 */
+	public void removeYear() {
+		if( createdYear ) {
+			year = null;
+			updateModelConfiguration();
+		}
+	}
 
 	/**
 	 * Add holidays to the year hold as attribute
@@ -82,6 +112,24 @@ public class CalendarModel extends Observable {
 	public void addHolidays() {
 		if( createdYear ) {
 			yearFactory.addHolidays( year );
+			updateModelConfiguration();
+		}
+	}
+	
+	/**
+	 * Remove all the holidays
+	 */
+	public void removeHolidays() {
+		if( createdYear ) {
+			// init 
+			CalendarImportExport cie = new CalendarImportExport();
+			// create year config
+			YearConfig yearConfig = cie.year2YearConfig( year );
+			// update configuration
+			yearConfig.setAddedHolidays( false );
+			// import it
+			year = cie.yearConfig2Year( yearConfig );
+			// update
 			updateModelConfiguration();
 		}
 	}
@@ -97,12 +145,40 @@ public class CalendarModel extends Observable {
 	}
 	
 	/**
+	 * Remove specific entry
+	 */
+	public void removeEntry( Date date ) {
+		if( addedEntries ) {
+			yearFactory.removeEntry( year, date );
+			updateModelConfiguration();
+		}
+	}
+	
+	/**
 	 * Add entries to the year hold as an attribute
 	 */
 	public void addEntries( Dates dates ) {
 		for( Date date : dates.getListOfDates() ) {
 			addEntry( date );
 		}
+	}
+	
+	/**
+	 * Remove all entries
+	 */
+	public void removeEntries() {
+		if( createdYear ) {
+			// init 
+			CalendarImportExport cie = new CalendarImportExport();
+			// create year config
+			YearConfig yearConfig = cie.year2YearConfig( year );
+			// update configuration
+			yearConfig.setDates( new Dates() );
+			// import it
+			year = cie.yearConfig2Year( yearConfig );
+			// update
+			updateModelConfiguration();
+		}		
 	}
 	
 	/**
@@ -133,10 +209,10 @@ public class CalendarModel extends Observable {
 	 * @param filename Destination file
 	 * @return Success
 	 */
-	public boolean exportYearToXml( String filename ) {
+	public boolean exportYearToConfigXml( String filename ) {
 		if( createdYear ) {
 			// create string
-			String printedYear = printYearXml();
+			String printedYear = printYearConfig();
 			// create writer
 			CalendarWriter writer = new CalendarWriter();
 			// write file
@@ -150,9 +226,9 @@ public class CalendarModel extends Observable {
 	/**
 	 * Import year from *.xml file
 	 */
-	public boolean importYearFromXml( String filename ) {
+	public boolean importYearFromConfigXml( String filename ) {
 		CalendarReader reader = new CalendarReader();
-		CalendarImporter importer = new CalendarImporter();
+		CalendarImportExport importer = new CalendarImportExport();
 		try {
 			String data = reader.readFromDisk( filename );
 			year = importer.importYearFromString( data );
@@ -162,6 +238,13 @@ public class CalendarModel extends Observable {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Get year
+	 */
+	public Year getYear() {
+		return year;
 	}
 	
 	/**
@@ -246,13 +329,13 @@ public class CalendarModel extends Observable {
 	 * Print an already created year as *.xml string
 	 * @return *.xml string
 	 */
-	private String printYearXml() {
+	private String printYearConfig() {
 		// init
 		String printedYear = null;
 		// process
 		if( year != null ) {
 			// create printer
-			CalendarPrinter printer = new CalendarPrinterXml();
+			CalendarPrinter printer = new CalendarPrinterConfigXml();
 			// create string
 			printedYear = printer.printYear( year );
 		}

@@ -4,14 +4,14 @@ package org.calendarcreator.tests;
 
 import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Year;
-import org.calendarcreator.data.YearXml;
-import org.calendarcreator.model.CalendarImporter;
+import org.calendarcreator.data.YearConfig;
+import org.calendarcreator.model.CalendarImportExport;
 import org.calendarcreator.model.YearFactory;
 import org.calendarcreator.model.printer.CalendarPrinter;
-import org.calendarcreator.model.printer.CalendarPrinterXml;
+import org.calendarcreator.model.printer.CalendarPrinterConfigXml;
 import org.junit.Test;
 
-public class CalendarimporterTest {
+public class CalendarImportExportTest {
 
 	@Test
 	public void testImportYearXmlFromString() {
@@ -24,17 +24,17 @@ public class CalendarimporterTest {
 		yearFactory.addEntry( year, new Date( 1, 7, "*Jette" ) );
 		yearFactory.addEntry( year, new Date( 11, 12, "*Kai" ) );
 		// convert to xml string
-		CalendarPrinter printer = new CalendarPrinterXml();
+		CalendarPrinter printer = new CalendarPrinterConfigXml();
 		String data = printer.printYear( year );
 		// print it
 		System.out.println( data );
 		// convert to back year xml
-		CalendarImporter importer = new CalendarImporter();
-		YearXml yearXml = importer.importYearXmlFromString( data );
+		CalendarImportExport importer = new CalendarImportExport();
+		YearConfig yearConfig = importer.importYearConfigFromString( data );
 		// try to read it
-		System.out.println( yearXml.getYearInteger() );
-		System.out.println( yearXml.isAddedHolidays() );
-		System.out.println( yearXml.isAddedEntries() );
+		System.out.println( yearConfig.getYearInteger() );
+		System.out.println( yearConfig.isAddedHolidays() );
+		System.out.println( yearConfig.isAddedEntries() );
 	}
 	
 	@Test
@@ -48,15 +48,15 @@ public class CalendarimporterTest {
 		yearFactory.addEntry( year, new Date( 1, 7, "*Jette" ) );
 		yearFactory.addEntry( year, new Date( 11, 12, "*Kai" ) );
 		// convert to xml string
-		CalendarPrinter printer = new CalendarPrinterXml();
+		CalendarPrinter printer = new CalendarPrinterConfigXml();
 		String data = printer.printYear( year );
 		// print it
 		System.out.println( data );
 		// convert to back year xml
-		CalendarImporter importer = new CalendarImporter();
-		YearXml yearXml = importer.importYearXmlFromString( data );
+		CalendarImportExport importer = new CalendarImportExport();
+		YearConfig yearConfig = importer.importYearConfigFromString( data );
 		// convert back to year
-		year = importer.yearXml2Year( yearXml );
+		year = importer.yearConfig2Year( yearConfig );
 		// print it
 		System.out.println( year.getYearInteger() );
 	}
@@ -72,10 +72,10 @@ public class CalendarimporterTest {
 		yearFactory.addEntry( year, new Date( 1, 7, "*Jette" ) );
 		yearFactory.addEntry( year, new Date( 11, 12, "*Kai" ) );
 		// convert to xml string
-		CalendarPrinter printer = new CalendarPrinterXml();
+		CalendarPrinter printer = new CalendarPrinterConfigXml();
 		String data = printer.printYear( year );
 		// convert back
-		CalendarImporter importer = new CalendarImporter();
+		CalendarImportExport importer = new CalendarImportExport();
 		year = importer.importYearFromString( data );
 		// print it
 		System.out.println( year.getYearInteger() );

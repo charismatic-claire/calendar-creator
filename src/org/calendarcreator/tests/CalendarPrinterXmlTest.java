@@ -8,7 +8,7 @@ package org.calendarcreator.tests;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.model.YearFactory;
 import org.calendarcreator.model.printer.CalendarPrinter;
-import org.calendarcreator.model.printer.CalendarPrinterXml;
+import org.calendarcreator.model.printer.CalendarPrinterConfigXml;
 import org.junit.Test;
 
 /**
@@ -23,7 +23,7 @@ public class CalendarPrinterXmlTest {
 		Year year = yearFactory.createYear( 2016 );
 		yearFactory.addHolidays( year );
 		// print it
-		CalendarPrinter printer = new CalendarPrinterXml();
+		CalendarPrinter printer = new CalendarPrinterConfigXml();
 		System.out.println( printer.printYear( year ) );
 	}
 

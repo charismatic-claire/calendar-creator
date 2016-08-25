@@ -8,13 +8,13 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXB;
 
 import org.calendarcreator.data.Year;
-import org.calendarcreator.data.YearXml;
+import org.calendarcreator.data.YearConfig;
 import org.calendarcreator.model.YearFactory;
 
 /**
  *
  */
-public class CalendarPrinterXml implements CalendarPrinter {
+public class CalendarPrinterConfigXml implements CalendarPrinter {
 	
 	@Override
 	public String printYear( Year year ) {
@@ -22,11 +22,11 @@ public class CalendarPrinterXml implements CalendarPrinter {
 		String printedYear;
 		// create writer
 		StringWriter writer = new StringWriter();
-		// create YearXml
+		// create YearConfig
 		YearFactory yearFactory = new YearFactory();
-		YearXml yearXml = yearFactory.createYearXml( year );
-		// print YearXml
-		JAXB.marshal( yearXml, writer );
+		YearConfig yearConfig = yearFactory.createYearConfig( year );
+		// print YearConfig
+		JAXB.marshal( yearConfig, writer );
 		printedYear = writer.toString();
 		// return result
 		return printedYear;

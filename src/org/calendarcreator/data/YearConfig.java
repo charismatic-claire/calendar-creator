@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
-public class YearXml {
+public class YearConfig {
 
 	private int yearInteger;
 	
@@ -20,7 +20,7 @@ public class YearXml {
 	
 	private Dates dates;
 	
-	public YearXml() {
+	public YearConfig() {
 		this.yearInteger = 0;
 		this.addedHolidays = false;
 		this.addedEntries = false;

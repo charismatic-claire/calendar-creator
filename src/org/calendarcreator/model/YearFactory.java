@@ -14,7 +14,7 @@ import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Holiday;
 import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Year;
-import org.calendarcreator.data.YearXml;
+import org.calendarcreator.data.YearConfig;
 
 import java.util.Set;
 
@@ -48,6 +48,8 @@ public class YearFactory {
 		for( Entry<Holiday,Date> entry : entries ) {
 			setHolidayOfDate( entry.getValue(), entry.getKey() );
 		}
+		// remove year
+		this.year = null;
 	}
 	
 	/**
@@ -58,6 +60,20 @@ public class YearFactory {
 		this.year = year;
 		// add entry
 		getDayOfDate( date ).setEntry( date.getEntry() );
+		// remove year
+		this.year = null;
+	}
+	
+	/**
+	 * Remove the entry of a specific date
+	 */
+	public void removeEntry( Year year, Date date ) {
+		// save year
+		this.year = year;
+		// add entry
+		getDayOfDate( date ).setEntry( null );
+		// remove year
+		this.year = null;		
 	}
 	
 	/**
@@ -70,20 +86,22 @@ public class YearFactory {
 		for( Date date: dates.getListOfDates() ) {
 			getDayOfDate( date ).setEntry( date.getEntry() );
 		}
+		// remove year
+		this.year = null;
 	}
 
 	/**
 	 * Transform a Year to a YearXml 
 	 */
-	public YearXml createYearXml( Year year ) {
+	public YearConfig createYearConfig( Year year ) {
 		// save the year
 		this.year = year;
-		// create new year xml 
-		YearXml yearXml = new YearXml();
+		// create new year config 
+		YearConfig yearConfig = new YearConfig();
 		// set the year integer
-		yearXml.setYearInteger( year.getYearInteger() );
+		yearConfig.setYearInteger( year.getYearInteger() );
 		// set the added holidays flag
-		yearXml.setAddedHolidays( isAddedHolidays( year ) );
+		yearConfig.setAddedHolidays( isAddedHolidays( year ) );
 		// generate dates
 		Dates dates = new Dates();
 		for( Month month : year.getListOfMonths() ) {
@@ -97,11 +115,13 @@ public class YearFactory {
 			}
 		}
 		// add dates
-		yearXml.setDates( dates );
+		yearConfig.setDates( dates );
 		// set the added entries flag
-		yearXml.setAddedEntries( isAddedEntries( year ) );
+		yearConfig.setAddedEntries( isAddedEntries( year ) );
+		// remove year
+		this.year = null;
 		// return result
-		return yearXml;
+		return yearConfig;
 	}
 	
 	/**
@@ -111,7 +131,11 @@ public class YearFactory {
 		// save year
 		this.year = year;
 		// evaluate 
-		return getHolidayOfDate( new Date( 1, 1 ) ) != null;
+		boolean addedHolidays = getHolidayOfDate( new Date( 1, 1 ) ) != null;
+		// remove year
+		this.year = null;
+		// return
+		return addedHolidays;
 	}
 	
 	/**
@@ -121,14 +145,18 @@ public class YearFactory {
 		// save year
 		this.year = year;
 		// evaluate
+		boolean addedEntries = false;
 		for( Month month : year.getListOfMonths() ) {
 			for( Day day : month.getListOfDays() ) {
 				if( day.getEntry() != null ) {
-					return true;
+					addedEntries = true;
 				}
 			}
 		}
-		return false;
+		// remove year
+		this.year = null;
+		// return
+		return addedEntries;
 	}
 
 	/**
