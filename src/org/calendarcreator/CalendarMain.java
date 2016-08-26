@@ -1,33 +1,24 @@
-/**
- * 
- */
 package org.calendarcreator;
 
-import org.calendarcreator.controller.MenuItemListener;
-import org.calendarcreator.model.CalendarModelFull;
-import org.calendarcreator.view.CalendarView;
+import org.calendarcreator.gui.CalendarController;
+import org.calendarcreator.gui.CalendarView;
+import org.calendarcreator.model.CalendarModel;
+import org.calendarcreator.model.CalendarModelMini;
 
-/**
- *
- */
 public class CalendarMain {
 
-	/**
-	 * 
-	 */
 	public static void main(String[] args) {
 		// create model
-		CalendarModelFull model = new CalendarModelFull();
-		// create view
-		CalendarView view = new CalendarView();
+		CalendarModel model = new CalendarModelMini();
 		// create controller
-		MenuItemListener controller = new MenuItemListener( model, view );
-		// add observer
-		model.addObserver( controller );
-		// run view
-		view.run( controller );
-		
-
+		CalendarController controller = new CalendarController();
+		// create view
+		CalendarView view = new CalendarView( controller );
+		// add view and model controller
+		controller.addModel( model );
+		controller.addView( view );
+		// add controller to model
+		model.addController( controller );		
 	}
 
 }

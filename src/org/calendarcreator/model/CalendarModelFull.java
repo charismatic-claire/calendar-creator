@@ -13,6 +13,7 @@ import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.data.YearConfig;
+import org.calendarcreator.gui.CalendarController;
 import org.calendarcreator.io.CalendarReader;
 import org.calendarcreator.io.CalendarWriter;
 import org.calendarcreator.model.printer.CalendarPrinter;
@@ -70,10 +71,8 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 
 	@Override
 	public void createYear( int yearInteger ) {
-		if( !( createdYear ) ) {
 			this.year = yearFactory.createYear( yearInteger );
-			updateModelConfiguration();			
-		}
+			updateModelConfiguration();
 	}
 	
 	@Override
@@ -218,6 +217,11 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 		modelConfiguration.setAddedHolidays( addedHolidays );
 		modelConfiguration.setAddedEntries( addedEntries );
 		return modelConfiguration;
+	}
+	
+	@Override
+	public void addController( CalendarController controller ) {
+		// to do
 	}
 
 	/**

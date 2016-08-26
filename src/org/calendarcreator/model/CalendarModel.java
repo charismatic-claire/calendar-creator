@@ -8,6 +8,7 @@ import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.data.Style;
+import org.calendarcreator.gui.CalendarController;
 
 /**
  * Interface for communication between Controller and Model
@@ -16,7 +17,7 @@ public interface CalendarModel {
 	
 	/**
 	 * Create a new calendar year.
-	 * Precondition: not createdYear
+	 * Precondition: NONE
 	 * @param yearInteger year as integer number
 	 */
 	public void createYear( int yearInteger );
@@ -107,5 +108,11 @@ public interface CalendarModel {
 	 * @return ModelConfiguration
 	 */
 	public ModelConfiguration getModelConfiguration();
+	
+	/**
+	 * Connect CalendarModel to a CalendarController
+	 * @param controller CalendarController
+	 */
+	public void addController( CalendarController controller );
 
 }
