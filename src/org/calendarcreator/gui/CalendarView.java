@@ -5,13 +5,19 @@ package org.calendarcreator.gui;
 
 import java.awt.GridLayout;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
+import org.calendarcreator.data.Style;
 
 /**
  * the main user interface
@@ -65,7 +71,7 @@ public class CalendarView extends JFrame {
 	 * Update label text, according to model configuration  
 	 * @param config ModelConfiguration
 	 */
-	public void updateLabelText( ModelConfiguration config ) {
+	protected void updateLabelText( ModelConfiguration config ) {
 		if( config.getYear() != null ) {
 			yearIntegerLabelText.setText( "" + config.getYear().getYearInteger() + "" );
 		}
@@ -81,14 +87,113 @@ public class CalendarView extends JFrame {
 	 * Update menu item availability, according to model configuration
 	 * @param config ModelConfiguration
 	 */
-	public void updateAvailability( ModelConfiguration config ) {
+	protected void updateAvailability( ModelConfiguration config ) {
 		setAvailability( config.isCreatedYear(), config.isAddedHolidays(), config.isAddedEntries() );
+	}
+	
+	protected Integer getYearInteger() {
+		try {
+			String yearString = JOptionPane.showInputDialog( "Select year:" );
+			Integer yearInteger = Integer.parseInt( yearString );
+			return yearInteger;
+		}
+		catch( Exception e ) {
+			System.err.println( "Input not accepted." );
+		}
+		return null;
+	}
+	
+	protected void showHelp() {
+		JOptionPane.showMessageDialog( this, "CalendarCreator v2.0 Help\n\nHelp text here..." );
+	}
+	
+	protected String getSaveTexFilePath() {
+		try {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode( JFileChooser.FILES_ONLY );
+			fc.setFileFilter( new FileNameExtensionFilter( "TEX files", "tex" ) );
+			if( fc.showSaveDialog( this ) == JFileChooser.APPROVE_OPTION ) {
+				return fc.getSelectedFile().toString();
+			}
+		}
+		catch( Exception e ) {
+			System.err.println( "File selection failed." );
+		}
+		return null;
+	}	
+	
+	protected String getSaveXmlFilePath() {
+		try {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode( JFileChooser.FILES_ONLY );
+			fc.setFileFilter( new FileNameExtensionFilter( "XML files", "XML" ) );
+			if( fc.showSaveDialog( this ) == JFileChooser.APPROVE_OPTION ) {
+				return fc.getSelectedFile().toString();
+			}
+		}
+		catch( Exception e ) {
+			System.err.println( "File selection failed." );
+		}
+		return null;
+	}
+	
+	protected String getOpenXmlFilePath() {
+		try {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode( JFileChooser.FILES_ONLY );
+			fc.setFileFilter( new FileNameExtensionFilter( "XML files", "XML" ) );
+			if( fc.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION ) {
+				return fc.getSelectedFile().toString();
+			}
+		}
+		catch( Exception e ) {
+			System.err.println( "File selection failed." );
+		}
+		return null;
+	}
+	
+	protected Language getLanguage() {
+		try {
+			Language[] langs = { Language.EN, Language.DE };
+			Language lang = (Language) JOptionPane.showInputDialog(
+					this,
+					"Select languague:",
+					"Language selection",
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					langs,
+					Language.EN );
+			return lang;
+		}
+		catch( Exception e ) {
+			System.err.println( "Language selection failed." );
+		}
+		return null;
+	}
+	
+	protected Style getStyle() {
+		try {
+			Style[] styles = { Style.CLASSIC, Style.KITCHEN, Style.JEDDI };
+			Style style = (Style) JOptionPane.showInputDialog(
+					this, 
+					"Select style:", 
+					"Style selection", 
+					JOptionPane.QUESTION_MESSAGE, 
+					null, 
+					styles, 
+					Style.CLASSIC );
+			return style;
+		}
+		catch( Exception e ) {
+			System.err.println( "Style selection failed." );
+		}
+		return null;
 	}
 	
 	/**
 	 * Close the view
 	 */
-	public void terminate() {
+	protected void terminate() {
 		this.setVisible( false );
 		this.dispose();
 	}
@@ -101,7 +206,7 @@ public class CalendarView extends JFrame {
 		this.setTitle( "CalendarCreater v2.0" );
 		this.setSize( 400, 200 );
 		this.setLayout( new GridLayout( 4, 2 ) );
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
 	    // init message area
 		yearIntegerLabelText = new JLabel( "" );
@@ -114,13 +219,13 @@ public class CalendarView extends JFrame {
 	    
 	    // add elements to main window
 	    this.setJMenuBar( menuBar );
-	    this.add( new JLabel( "year integer:" ) );
+	    this.add( new JLabel( "Year (integer):    ", SwingConstants.RIGHT ) );
 	    this.add( yearIntegerLabelText );
-	    this.add( new JLabel( "created year:" ) );
+	    this.add( new JLabel( "Created year:    ", SwingConstants.RIGHT ) );
 	    this.add( createdYearLabelText );
-	    this.add( new JLabel( "added holidays:" ) );
+	    this.add( new JLabel( "Added holidays:    ", SwingConstants.RIGHT ) );
 	    this.add( addedHolidaysLabelText );
-	    this.add( new JLabel( "added entries:" ) );
+	    this.add( new JLabel( "Added entries:    ", SwingConstants.RIGHT ) );
 	    this.add( addedEntriesLabelText );
 	    
 	    // create menus
@@ -200,6 +305,9 @@ public class CalendarView extends JFrame {
 		menuBar.add( editMenu );
 		menuBar.add( helpMenu );
 		
+		// center it
+		this.setLocationRelativeTo( null );
+		
 		// make main window visible
 		this.setVisible( true );
 	}
@@ -228,7 +336,7 @@ public class CalendarView extends JFrame {
 		newMenuItem.setEnabled( true );
 		openMenuItem.setEnabled( true );
 		exitMenuItem.setEnabled( true );
-		helpMenuItem.setEnabled( false );
+		helpMenuItem.setEnabled( true );
 		// created year?
 		if( createdYear ) {
 			saveMenuItem.setEnabled( true );

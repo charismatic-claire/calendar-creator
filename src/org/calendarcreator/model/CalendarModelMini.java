@@ -132,7 +132,7 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	@Override
 	public boolean exportYearToTex(Language lang, Style style, String filename) {
 		if( createdYear ) {
-			System.out.println( "exportYearToTex()" );
+			System.out.println( "exportYearToTex(): " + lang + ", " + style + ", " + filename );
 			return true;
 		}
 		else {
@@ -143,17 +143,17 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	@Override
 	public boolean exportYearToConfigXml(String filename) {
 		if( createdYear ) {
-			System.out.println( "exportYearToConfigXml()" );
+			System.out.println( "exportYearToConfigXml(): " + filename );
 			return true;
 		}
 		else {
 			return false;
-		}
+		}		
 	}
 
 	@Override
 	public boolean importYearFromConfigXml(String filename) {
-		System.out.println( "importYearFromConfigXml()" );
+		System.out.println( "importYearFromConfigXml() :" + filename );
 		createdYear = true;
 		addedHolidays = false;
 		addedEntries = false;
@@ -162,6 +162,14 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 		setChanged();
 		notifyObservers( getModelConfiguration() );
 		return true;
+	}
+	
+	@Override
+	public Year getYear() {
+		if( createdYear ) {
+			return year;
+		}
+		return null;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.data.Style;
+import org.calendarcreator.data.Year;
 import org.calendarcreator.gui.CalendarController;
 
 /**
@@ -108,6 +109,13 @@ public interface CalendarModel {
 	 * @return ModelConfiguration
 	 */
 	public ModelConfiguration getModelConfiguration();
+	
+	/**
+	 * Return calendar year from the model
+	 * Precondition: createdYear
+	 * @return Year
+	 */
+	public Year getYear();
 	
 	/**
 	 * Connect CalendarModel to a CalendarController

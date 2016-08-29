@@ -11,9 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.calendarcreator.data.Date;
-import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
-import org.calendarcreator.data.Style;
 import org.calendarcreator.model.CalendarModel;
 
 /**
@@ -40,16 +38,16 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 		// action
 		switch( command ) {
 			case "new":
-				model.createYear( 2016 );
+				model.createYear( view.getYearInteger() );
 				break;
 			case "open":
-				model.importYearFromConfigXml( "/tmp/2016.xml" );
+				model.importYearFromConfigXml( view.getOpenXmlFilePath() );
 				break;
 			case "save":
-				model.exportYearToConfigXml( "/tmp/2016.xml" );
+				model.exportYearToConfigXml( view.getSaveXmlFilePath() );
 				break;
 			case "export":
-				model.exportYearToTex( Language.EN , Style.CLASSIC, "/tmp/2016.tex");
+				model.exportYearToTex( view.getLanguage() , view.getStyle(), view.getSaveTexFilePath() );
 				break;
 			case "close":
 				model.removeYear();
@@ -58,7 +56,7 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 				terminate();
 				break;
 			case "update.year":
-				model.updateYear( 2017 );
+				model.updateYear( view.getYearInteger() );
 				break;
 			case "add.holidays":
 				model.addHolidays();
@@ -75,6 +73,8 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 			case "remove.entries":
 				model.removeEntries();
 				break;
+			case "help":
+				view.showHelp();
 			default:
 				// do nothing
 		}

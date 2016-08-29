@@ -18,7 +18,7 @@ public class CalendarMain {
 		controller.addModel( model );
 		controller.addView( view );
 		// add controller to model
-		model.addController( controller );		
+		model.addController( controller );				
 	}
 
 }

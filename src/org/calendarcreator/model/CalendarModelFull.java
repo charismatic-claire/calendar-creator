@@ -210,6 +210,14 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	}
 	
 	@Override
+	public Year getYear() {
+		if( createdYear ) {
+			return year;
+		}
+		return null;
+	}
+	
+	@Override
 	public ModelConfiguration getModelConfiguration() {
 		ModelConfiguration modelConfiguration = new ModelConfiguration();
 		modelConfiguration.setYear( year );
