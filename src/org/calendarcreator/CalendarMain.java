@@ -3,13 +3,13 @@ package org.calendarcreator;
 import org.calendarcreator.gui.CalendarController;
 import org.calendarcreator.gui.CalendarView;
 import org.calendarcreator.model.CalendarModel;
-import org.calendarcreator.model.CalendarModelMini;
+import org.calendarcreator.model.CalendarModelFull;
 
 public class CalendarMain {
 
 	public static void main(String[] args) {
 		// create model
-		CalendarModel model = new CalendarModelMini();
+		CalendarModel model = new CalendarModelFull();
 		// create controller
 		CalendarController controller = new CalendarController();
 		// create view

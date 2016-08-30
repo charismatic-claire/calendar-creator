@@ -18,15 +18,12 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	
 	private boolean addedEntries;
 	
-	private int numberOfEntries;
-	
 	private Year year;
 	
 	public CalendarModelMini() {
 		createdYear = false;
 		addedHolidays = false;
 		addedEntries = false;
-		numberOfEntries = 0;
 		year = null;
 	}
 
@@ -36,7 +33,6 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 		createdYear = true;
 		addedHolidays = false;
 		addedEntries = false;
-		numberOfEntries = 0;
 		year = new Year( yearInteger );
 		setChanged();
 		notifyObservers( getModelConfiguration() );
@@ -84,38 +80,42 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public void addEntry(Date date) {
+	public void editEntries() {
 		if( createdYear ) {
-			System.out.println( "addEntry()" );
+			System.out.println( "editEntries()" );
 			addedEntries = true;
-			numberOfEntries++;
 			setChanged();
 			notifyObservers( getModelConfiguration() );
 		}
 	}
-
+	
 	@Override
-	public void removeEntry(Date date) {
-		if( createdYear && addedEntries ) {
-			if( --numberOfEntries < 1 ) {
-				System.out.println( "removeEntry()" );
-				addedEntries = false;
-				setChanged();
-				notifyObservers( getModelConfiguration() );
-			}
+	public void addEntry( Date date ) {
+		if( createdYear ) {
+			System.out.println( "addEntry()" );
+			addedEntries = true;
+			setChanged();
+			notifyObservers( getModelConfiguration() );			
 		}
-
 	}
-
+	
 	@Override
-	public void addEntries(Dates dates) {
+	public void removeEntry( Date date ) {
+		if( createdYear && addedEntries ) {
+			System.out.println( "removeEntry()" );
+			setChanged();
+			notifyObservers( getModelConfiguration() );			
+		}
+	}
+	
+	@Override
+	public void addEntries( Dates dates ) {
 		if( createdYear ) {
 			System.out.println( "addEntries()" );
 			addedEntries = true;
 			setChanged();
-			notifyObservers( getModelConfiguration() );
+			notifyObservers( getModelConfiguration() );						
 		}
-
 	}
 
 	@Override
@@ -157,7 +157,6 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 		createdYear = true;
 		addedHolidays = false;
 		addedEntries = false;
-		numberOfEntries = 0;
 		year = new Year( 2015 );
 		setChanged();
 		notifyObservers( getModelConfiguration() );
@@ -173,17 +172,17 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public ModelConfiguration getModelConfiguration() {
+	public void addController( CalendarController controller ) {
+		this.addObserver( controller );
+	}
+
+	private ModelConfiguration getModelConfiguration() {
 		ModelConfiguration mc = new ModelConfiguration();
 		mc.setYear( year );
 		mc.setCreatedYear( createdYear );
 		mc.setAddedHolidays( addedHolidays );
 		mc.setAddedEntries( addedEntries );
 		return mc;
-	}
-	
-	public void addController( CalendarController controller ) {
-		this.addObserver( controller );
 	}
 
 }

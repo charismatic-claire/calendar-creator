@@ -122,6 +122,14 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			updateModelConfiguration();
 		}
 	}
+
+	@Override
+	public void editEntries() {
+		// TODO: Implement this
+		
+		// update
+		updateModelConfiguration();
+	}
 	
 	@Override
 	public void addEntry( Date date ) {
@@ -132,7 +140,7 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			}
 		}
 	}
-	
+
 	@Override
 	public void removeEntry( Date date ) {
 		if( createdYear && addedEntries ) {
@@ -140,14 +148,14 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			updateModelConfiguration();
 		}
 	}
-	
+
 	@Override
 	public void addEntries( Dates dates ) {
 		for( Date date : dates.getListOfDates() ) {
 			addEntry( date );
 		}
 	}
-	
+
 	@Override
 	public void removeEntries() {
 		if( createdYear && addedEntries ) {
@@ -218,6 +226,14 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	}
 	
 	@Override
+	public void addController( CalendarController controller ) {
+		this.addObserver( controller );
+	}
+
+	/**
+	 * Get the model configuration
+	 * @return ModelConfiguration
+	 */
 	public ModelConfiguration getModelConfiguration() {
 		ModelConfiguration modelConfiguration = new ModelConfiguration();
 		modelConfiguration.setYear( year );
@@ -225,11 +241,6 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 		modelConfiguration.setAddedHolidays( addedHolidays );
 		modelConfiguration.setAddedEntries( addedEntries );
 		return modelConfiguration;
-	}
-	
-	@Override
-	public void addController( CalendarController controller ) {
-		// to do
 	}
 
 	/**
@@ -240,6 +251,7 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 		createdYear = false;
 		addedHolidays = false;
 		addedEntries = false;
+		// check
 		if( year != null ) {
 			// set createdYear
 			createdYear = true;
@@ -248,6 +260,9 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			// set addedEntries
 			addedEntries = yearFactory.isAddedEntries( year );
 		}
+		// notify
+		setChanged();
+		notifyObservers( getModelConfiguration() );
 	}
 	
 	/**

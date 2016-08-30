@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.calendarcreator.data.Date;
 import org.calendarcreator.data.ModelConfiguration;
 import org.calendarcreator.model.CalendarModel;
 
@@ -64,11 +63,8 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 			case "remove.holidays":
 				model.removeHolidays();
 				break;
-			case "add.entry":
-				model.addEntry( new Date( 5, 8, "Liberation Day" ) );
-				break;
-			case "remove.entry":
-				model.removeEntry( new Date( 5, 8 ) );
+			case "edit.entries":
+				model.editEntries();
 				break;
 			case "remove.entries":
 				model.removeEntries();

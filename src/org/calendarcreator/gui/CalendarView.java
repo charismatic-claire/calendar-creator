@@ -54,9 +54,7 @@ public class CalendarView extends JFrame {
 		
 	private JMenuItem removeHolidaysMenuItem;
 		
-	private JMenuItem addEntryMenuItem;
-		
-	private JMenuItem removeEntryMenuItem;
+	private JMenuItem editEntriesMenuItem;
 		
 	private JMenuItem removeEntriesMenuItem;
 		
@@ -253,10 +251,8 @@ public class CalendarView extends JFrame {
 		addHolidaysMenuItem.setActionCommand( "add.holidays" );
 		removeHolidaysMenuItem = new JMenuItem( "Remove holidays" );
 		removeHolidaysMenuItem.setActionCommand( "remove.holidays" );
-		addEntryMenuItem = new JMenuItem( "Add entry" );
-		addEntryMenuItem.setActionCommand( "add.entry" );
-		removeEntryMenuItem = new JMenuItem( "Remove entry" );
-		removeEntryMenuItem.setActionCommand( "remove.entry" );
+		editEntriesMenuItem = new JMenuItem( "Edit entries" );
+		editEntriesMenuItem.setActionCommand( "edit.entries" );
 		removeEntriesMenuItem = new JMenuItem( "Remove all entries" );
 		removeEntriesMenuItem.setActionCommand( "remove.entries" );
 		
@@ -277,8 +273,7 @@ public class CalendarView extends JFrame {
 		updateYearMenuItem.addActionListener( controller );
 		addHolidaysMenuItem.addActionListener( controller );
 		removeHolidaysMenuItem.addActionListener( controller );
-		addEntryMenuItem.addActionListener( controller );
-		removeEntryMenuItem.addActionListener( controller );
+		editEntriesMenuItem.addActionListener( controller );
 		removeEntriesMenuItem.addActionListener( controller );
 		
 		helpMenuItem.addActionListener( controller );
@@ -294,8 +289,7 @@ public class CalendarView extends JFrame {
 		editMenu.add( updateYearMenuItem );
 		editMenu.add( addHolidaysMenuItem );
 		editMenu.add( removeHolidaysMenuItem );
-		editMenu.add( addEntryMenuItem );
-		editMenu.add( removeEntryMenuItem );
+		editMenu.add( editEntriesMenuItem );
 		editMenu.add( removeEntriesMenuItem );
 		
 		helpMenu.add( helpMenuItem );
@@ -343,18 +337,16 @@ public class CalendarView extends JFrame {
 			exportMenuItem.setEnabled( true );
 			closeMenuItem.setEnabled( true );
 			updateYearMenuItem.setEnabled( true );
-			addEntryMenuItem.setEnabled( true );
+			editEntriesMenuItem.setEnabled( true );
 			// added holidays?
 			if( addedHolidays ) {
 				addHolidaysMenuItem.setEnabled( false );
 				removeHolidaysMenuItem.setEnabled( true );
 				// added entries?
 				if( addedEntries ) {
-					removeEntryMenuItem.setEnabled( true );
 					removeEntriesMenuItem.setEnabled( true );
 				}
 				else {
-					removeEntryMenuItem.setEnabled( false );
 					removeEntriesMenuItem.setEnabled( false );					
 				}
 			}
@@ -363,11 +355,9 @@ public class CalendarView extends JFrame {
 				removeHolidaysMenuItem.setEnabled( false );
 				// added entries?
 				if( addedEntries ) {
-					removeEntryMenuItem.setEnabled( true );
 					removeEntriesMenuItem.setEnabled( true );
 				}
 				else {
-					removeEntryMenuItem.setEnabled( false );
 					removeEntriesMenuItem.setEnabled( false );					
 				}
 			}
@@ -379,8 +369,7 @@ public class CalendarView extends JFrame {
 			updateYearMenuItem.setEnabled( false );
 			addHolidaysMenuItem.setEnabled( false );
 			removeHolidaysMenuItem.setEnabled( false );
-			addEntryMenuItem.setEnabled( false );
-			removeEntryMenuItem.setEnabled( false );
+			editEntriesMenuItem.setEnabled( false );
 			removeEntriesMenuItem.setEnabled( false );
 		}		
 	}
