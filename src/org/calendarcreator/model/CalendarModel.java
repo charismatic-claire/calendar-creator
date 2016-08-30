@@ -6,7 +6,6 @@ package org.calendarcreator.model;
 import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
-import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.gui.CalendarController;
@@ -50,12 +49,6 @@ public interface CalendarModel {
 	public void removeHolidays();
 
 	/**
-	 * Edit entries of a calendar year
-	 * Precondition: createdYear
-	 */
-	public String editEntries( Month month );
-	
-	/**
 	 * Add entry to date
 	 * Precondition: createdYear
 	 * @param date Date
@@ -81,6 +74,14 @@ public interface CalendarModel {
 	 * Precondition: createdYear, addedEntries
 	 */
 	public void removeEntries();
+	
+	/**
+	 * Get the entry of a specific date
+	 * Precondition: createdYear
+	 * @param date Date
+	 * @return Entry
+	 */
+	public String getEntry( Date date );
 	
 	/**
 	 * Export the calendar year to a valid TEX file  
@@ -120,6 +121,6 @@ public interface CalendarModel {
 	 * Connect CalendarModel to a CalendarController
 	 * @param controller CalendarController
 	 */
-	public void addController( CalendarController controller );
+	public void init( CalendarController controller );
 
 }

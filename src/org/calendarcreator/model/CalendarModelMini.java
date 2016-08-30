@@ -6,7 +6,6 @@ import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
-import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.gui.CalendarController;
@@ -81,17 +80,6 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public String editEntries( Month month ) {
-		if( createdYear ) {
-			System.out.println( "editEntries()" );
-			addedEntries = true;
-			setChanged();
-			notifyObservers( getModelConfiguration() );
-		}
-		return "";
-	}
-	
-	@Override
 	public void addEntry( Date date ) {
 		if( createdYear ) {
 			System.out.println( "addEntry()" );
@@ -129,6 +117,11 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 			notifyObservers( getModelConfiguration() );
 		}
 
+	}
+	
+	@Override
+	public String getEntry( Date date ) {
+		return null;
 	}
 
 	@Override
@@ -174,7 +167,7 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public void addController( CalendarController controller ) {
+	public void init( CalendarController controller ) {
 		this.addObserver( controller );
 	}
 

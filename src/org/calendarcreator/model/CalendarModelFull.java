@@ -10,7 +10,6 @@ import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Format;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
-import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.data.YearConfig;
@@ -125,12 +124,6 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public String editEntries( Month month ) {
-		// TODO
-		return null;
-	}
-	
-	@Override
 	public void addEntry( Date date ) {
 		if( createdYear ) {
 			if( date.getEntry() != null ) {
@@ -169,6 +162,14 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			// update
 			updateModelConfiguration();
 		}		
+	}
+	
+	@Override
+	public String getEntry( Date date ) {
+		if( createdYear ) {
+			return yearFactory.getEntry( year, date );
+		}
+		return null;
 	}
 	
 	@Override
@@ -225,7 +226,7 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	}
 	
 	@Override
-	public void addController( CalendarController controller ) {
+	public void init( CalendarController controller ) {
 		this.addObserver( controller );
 	}
 

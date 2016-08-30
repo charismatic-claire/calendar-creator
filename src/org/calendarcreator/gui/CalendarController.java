@@ -22,18 +22,18 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 	
 	private CalendarView view;
 	
+	private EntryButtonController entryButtonController;
+	
 	private int monthToEdit;
 	
 	public CalendarController() {
 		this.monthToEdit = 1;
 	}
 	
-	public void addModel( CalendarModel model ) {
+	public void init( CalendarModel model, CalendarView view ) {
 		this.model = model;
-	}
-	
-	public void addView( CalendarView view ) {
 		this.view = view;
+		this.entryButtonController = new EntryButtonController( model, view );
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 				model.removeHolidays();
 				break;
 			case "edit.entries":
-				view.editMonth( model.getYear().getCollectionOfMonths().get( monthToEdit ) );
+				view.editMonth( model.getYear().getCollectionOfMonths().get( monthToEdit ), entryButtonController );
 				break;
 			case "remove.entries":
 				model.removeEntries();
@@ -79,13 +79,13 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 				view.showHelp();
 				break;
 			case "previous":
-				view.editMonth( model.getYear().getCollectionOfMonths().get( decrementMonth() ) );
+				view.editMonth( model.getYear().getCollectionOfMonths().get( decrementMonth() ), entryButtonController );
 				break;
 			case "next":
-				view.editMonth( model.getYear().getCollectionOfMonths().get( incrementMonth() ) );
+				view.editMonth( model.getYear().getCollectionOfMonths().get( incrementMonth() ), entryButtonController );
 				break;
 			default:
-				System.out.println( "Button clicked: " + command );
+				// do nothing
 		}
 	}
 

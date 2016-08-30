@@ -14,11 +14,10 @@ public class CalendarMain {
 		CalendarController controller = new CalendarController();
 		// create view
 		CalendarView view = new CalendarView( controller );
-		// add view and model controller
-		controller.addModel( model );
-		controller.addView( view );
-		// add controller to model
-		model.addController( controller );				
+		// initialize controller
+		controller.init( model, view ); 
+		// initialize model
+		model.init( controller );				
 	}
 
 }

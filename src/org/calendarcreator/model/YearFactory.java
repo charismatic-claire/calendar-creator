@@ -89,6 +89,17 @@ public class YearFactory {
 		// remove year
 		this.year = null;
 	}
+	
+	public String getEntry( Year year, Date date ) {
+		// save year
+		this.year = year;
+		// get entry
+		String entry = getDayOfDate( date ).getEntry();
+		// remove year
+		this.year = null;
+		// return
+		return entry;
+	}
 
 	/**
 	 * Transform a Year to a YearXml 
