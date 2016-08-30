@@ -44,7 +44,8 @@ public class CalendarPrinterLandscape implements CalendarPrinter {
 		return printedYear;
 	}
 
-	private String printMonth(Month month) {
+	@Override
+	public String printMonth(Month month) {
 		// init string
 		String printedMonth = "";
 		// print month of year

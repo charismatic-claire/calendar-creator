@@ -40,7 +40,8 @@ public class CalendarPrinterPortrait implements CalendarPrinter {
 		return printedYear;
 	}
 	
-	private String printMonth( Month month ) {
+	@Override
+	public String printMonth( Month month ) {
 		// init string
 		String printedMonth = "";
 		// print month of year
@@ -80,7 +81,7 @@ public class CalendarPrinterPortrait implements CalendarPrinter {
 		// init string
 		String printedMonth = "";
 		// print month
-		printedMonth = translator.translateMonthOfYear( month.getMonthOfYear() ) + ":\n";
+		printedMonth += translator.translateMonthOfYear( month.getMonthOfYear() ) + ":\n";
 		// return result
 		return printedMonth;
 	}

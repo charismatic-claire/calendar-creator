@@ -22,6 +22,12 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 	
 	private CalendarView view;
 	
+	private int monthToEdit;
+	
+	public CalendarController() {
+		this.monthToEdit = 1;
+	}
+	
 	public void addModel( CalendarModel model ) {
 		this.model = model;
 	}
@@ -64,15 +70,22 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 				model.removeHolidays();
 				break;
 			case "edit.entries":
-				model.editEntries();
+				view.editMonth( model.getYear().getCollectionOfMonths().get( monthToEdit ) );
 				break;
 			case "remove.entries":
 				model.removeEntries();
 				break;
 			case "help":
 				view.showHelp();
+				break;
+			case "previous":
+				view.editMonth( model.getYear().getCollectionOfMonths().get( decrementMonth() ) );
+				break;
+			case "next":
+				view.editMonth( model.getYear().getCollectionOfMonths().get( incrementMonth() ) );
+				break;
 			default:
-				// do nothing
+				System.out.println( "Button clicked: " + command );
 		}
 	}
 
@@ -88,6 +101,24 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 	@Override
 	public void windowClosed( WindowEvent we ) {
 		terminate();
+	}
+	
+	private int incrementMonth() {
+		if( monthToEdit < 12 ) {
+			return ++monthToEdit;
+		}
+		else {
+			return monthToEdit;
+		}
+	}
+	
+	private int decrementMonth() {
+		if( monthToEdit > 1 ) {
+			return --monthToEdit;
+		}
+		else {
+			return monthToEdit;
+		}
 	}
 	
 	private void terminate() {

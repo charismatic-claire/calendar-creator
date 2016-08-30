@@ -6,6 +6,7 @@ import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
+import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.gui.CalendarController;
@@ -80,13 +81,14 @@ public class CalendarModelMini extends Observable implements CalendarModel {
 	}
 
 	@Override
-	public void editEntries() {
+	public String editEntries( Month month ) {
 		if( createdYear ) {
 			System.out.println( "editEntries()" );
 			addedEntries = true;
 			setChanged();
 			notifyObservers( getModelConfiguration() );
 		}
+		return "";
 	}
 	
 	@Override

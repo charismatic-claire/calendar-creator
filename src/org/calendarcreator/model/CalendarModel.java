@@ -6,6 +6,7 @@ package org.calendarcreator.model;
 import org.calendarcreator.data.Date;
 import org.calendarcreator.data.Dates;
 import org.calendarcreator.data.Language;
+import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.gui.CalendarController;
@@ -52,7 +53,7 @@ public interface CalendarModel {
 	 * Edit entries of a calendar year
 	 * Precondition: createdYear
 	 */
-	public void editEntries();
+	public String editEntries( Month month );
 	
 	/**
 	 * Add entry to date

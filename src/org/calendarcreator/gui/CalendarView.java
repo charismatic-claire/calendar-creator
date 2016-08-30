@@ -4,7 +4,9 @@
 package org.calendarcreator.gui;
 
 import java.awt.GridLayout;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,12 +14,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.calendarcreator.data.Day;
 import org.calendarcreator.data.Language;
 import org.calendarcreator.data.ModelConfiguration;
+import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Style;
+import org.calendarcreator.model.translator.CalendarTranslator;
+import org.calendarcreator.model.translator.CalendarTranslatorEnglish;
 
 /**
  * the main user interface
@@ -59,6 +66,8 @@ public class CalendarView extends JFrame {
 	private JMenuItem removeEntriesMenuItem;
 		
 	private JMenuItem helpMenuItem;
+	
+	private JFrame editMonthFrame;
 	
 	public CalendarView( CalendarController controller ) {
 		this.controller = controller;
@@ -186,6 +195,57 @@ public class CalendarView extends JFrame {
 			System.err.println( "Style selection failed." );
 		}
 		return null;
+	}
+	
+	protected void editMonth( Month month ) {
+		try {
+			// init
+			CalendarTranslator translator = new CalendarTranslatorEnglish();
+			ViewPrinter printer = new ViewPrinter( translator );
+			
+			// configure frame
+			if( editMonthFrame != null ) {
+				if( editMonthFrame.isActive() ) {
+					editMonthFrame.dispose();
+				}
+			}
+			editMonthFrame = new JFrame();
+			editMonthFrame.setSize( 300, 700 );
+			editMonthFrame.setLayout( new GridLayout( 0, 1 ) );
+			editMonthFrame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );				
+			editMonthFrame.setTitle( printer.printMonth( month ) );
+			
+			// add days line by line
+			List<Day> listOfDays = month.getListOfDays();
+			for( Day day: listOfDays ) {
+				JButton button = new JButton( printer.printDay( day ) );
+				button.setHorizontalAlignment( SwingConstants.LEFT );
+				button.setActionCommand( printer.printButtonLabel( month, day ) );
+				button.addActionListener( controller );
+				editMonthFrame.add( button );
+			}
+			
+			// add previous and next
+			JPanel panel = new JPanel();
+			panel.setLayout( new GridLayout( 1, 0 ) );
+			JButton previousButton = new JButton( "<< Previous" );
+			previousButton.setActionCommand( "previous" );
+			previousButton.addActionListener( controller );
+			JButton nextButton = new JButton( "Next >>" );
+			nextButton.setActionCommand( "next" );
+			nextButton.addActionListener( controller );
+			panel.add( previousButton );
+			panel.add( nextButton );
+			editMonthFrame.add( new JLabel( "" ) );
+			editMonthFrame.add( panel );
+			
+			// show frame
+			editMonthFrame.setLocationRelativeTo( null );
+			editMonthFrame.setVisible( true );				
+		}
+		catch( Exception e) {
+		// do nothing
+		}
 	}
 	
 	/**

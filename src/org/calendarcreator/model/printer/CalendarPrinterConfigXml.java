@@ -7,6 +7,7 @@ import java.io.StringWriter;
 
 import javax.xml.bind.JAXB;
 
+import org.calendarcreator.data.Month;
 import org.calendarcreator.data.Year;
 import org.calendarcreator.data.YearConfig;
 import org.calendarcreator.model.YearFactory;
@@ -30,6 +31,11 @@ public class CalendarPrinterConfigXml implements CalendarPrinter {
 		printedYear = writer.toString();
 		// return result
 		return printedYear;
+	}
+	
+	@Override
+	public String printMonth( Month month ) {
+		return null;
 	}
 
 }
