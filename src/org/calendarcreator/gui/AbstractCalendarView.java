@@ -2,6 +2,8 @@ package org.calendarcreator.gui;
 
 import java.awt.GridLayout;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -17,13 +19,15 @@ public abstract class AbstractCalendarView extends JFrame {
 	
 	protected CalendarController controller;
 	
-	protected JLabel yearIntegerLabelText;
+	protected Icon successIcon;
+	
+	protected Icon errorIcon;
+	
+	protected JLabel yearLabel;
 
-	protected JLabel createdYearLabelText;
+	protected JLabel addedHolidaysLabel;
 	
-	protected JLabel addedHolidaysLabelText;
-	
-	protected JLabel addedEntriesLabelText;
+	protected JLabel addedEntriesLabel;
 	
 	protected JMenuItem newMenuItem;
 	
@@ -51,6 +55,8 @@ public abstract class AbstractCalendarView extends JFrame {
 	
 	public AbstractCalendarView( CalendarController controller ) {
 		this.controller = controller;
+		this.successIcon = new ImageIcon( "icons/success.png" );
+		this.errorIcon = new ImageIcon( "icons/error.png" );
 		prepareGUI();
 	}
 
@@ -68,29 +74,26 @@ public abstract class AbstractCalendarView extends JFrame {
 	private void prepareGUI() {
 		// init window
 		this.setTitle( "CalendarCreater v2.0" );
-		this.setSize( 400, 200 );
-		this.setLayout( new GridLayout( 4, 2 ) );
+		this.setSize( 300, 400 );
+		this.setLayout( new GridLayout( 0, 2 ) );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
 	    // init message area
-		yearIntegerLabelText = new JLabel( "" );
-	    createdYearLabelText = new JLabel( "FALSE" );
-	    addedHolidaysLabelText = new JLabel( "FALSE" );
-	    addedEntriesLabelText = new JLabel( "FALSE" );
+		yearLabel = new JLabel( errorIcon );
+	    addedHolidaysLabel = new JLabel( errorIcon );
+	    addedEntriesLabel = new JLabel( errorIcon );
 	
 	    // init menu bar
 	    JMenuBar menuBar = new JMenuBar();
 	    
 	    // add elements to main window
 	    this.setJMenuBar( menuBar );
-	    this.add( new JLabel( "Year (integer):    ", SwingConstants.RIGHT ) );
-	    this.add( yearIntegerLabelText );
-	    this.add( new JLabel( "Created year:    ", SwingConstants.RIGHT ) );
-	    this.add( createdYearLabelText );
+	    this.add( new JLabel( "Calendar year:    ", SwingConstants.RIGHT ) );
+	    this.add( yearLabel );
 	    this.add( new JLabel( "Added holidays:    ", SwingConstants.RIGHT ) );
-	    this.add( addedHolidaysLabelText );
+	    this.add( addedHolidaysLabel );
 	    this.add( new JLabel( "Added entries:    ", SwingConstants.RIGHT ) );
-	    this.add( addedEntriesLabelText );
+	    this.add( addedEntriesLabel );
 	    
 	    // create menus
 		JMenu fileMenu = new JMenu( "File" );

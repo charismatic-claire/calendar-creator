@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -44,16 +43,30 @@ public class CalendarView extends AbstractCalendarView {
 	 * Update label text, according to model configuration  
 	 * @param config ModelConfiguration
 	 */
-	protected void updateLabelText( ModelConfiguration config ) {
-		if( config.getYear() != null ) {
-			yearIntegerLabelText.setText( "" + config.getYear().getYearInteger() + "" );
+	protected void updateLabel( ModelConfiguration config ) {
+		// calendar year
+		if( config.isCreatedYear() && config.getYear() != null ) {
+			yearLabel.setIcon( null );
+			yearLabel.setText( "" + config.getYear().getYearInteger() + "" );
 		}
 		else {
-			yearIntegerLabelText.setText( "" );
+			yearLabel.setIcon( errorIcon );
+			yearLabel.setText( null );
 		}
-		createdYearLabelText.setText( bool2String( config.isCreatedYear() ) );
-		addedHolidaysLabelText.setText( bool2String( config.isAddedHolidays() ) );
-		addedEntriesLabelText.setText( bool2String( config.isAddedEntries() ) );
+		// added holidays
+		if( config.isAddedHolidays() ) {
+			addedHolidaysLabel.setIcon( successIcon );
+		}
+		else {
+			addedHolidaysLabel.setIcon( errorIcon );
+		}
+		// added entries
+		if( config.isAddedEntries() ) {
+			addedEntriesLabel.setIcon( successIcon );
+		}
+		else {
+			addedEntriesLabel.setIcon( errorIcon );
+		}
 	}
 	
 	protected Integer getYearInteger() {
@@ -169,39 +182,44 @@ public class CalendarView extends AbstractCalendarView {
 			// configure frame
 			if( editMonthFrame == null ) {
 				editMonthFrame = new JFrame();
-				editMonthFrame.setSize( 300, 700 );
-				editMonthFrame.setLayout( new GridLayout( 0, 1 ) );
+				editMonthFrame.setSize( 600, 750 );
 				editMonthFrame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+				editMonthFrame.setLayout( new GridLayout( 0, 2 ) );				
 			}
 			else {
 				editMonthFrame.getContentPane().removeAll();
 				doRepaint = true;
 			}
-			editMonthFrame.setTitle( printer.printMonth( month ) );
+			editMonthFrame.setTitle( "Edit month: " + printer.printMonth( month ) );
 			
 			// add days line by line
 			List<Day> listOfDays = month.getListOfDays();
 			for( Day day: listOfDays ) {
-				JButton button = new JButton( printer.printDay( day ) );
+				// label
+				JLabel label = new JLabel( printer.printDayBasic( day ) );
+				label.setHorizontalAlignment( SwingConstants.RIGHT );
+				editMonthFrame.add( label );
+				// button
+				JButton button = new JButton( printer.printDayText( day ) );
 				button.setHorizontalAlignment( SwingConstants.LEFT );
 				button.setActionCommand( printer.printButtonLabel( month, day ) );
 				button.addActionListener( entryButtonController );
 				editMonthFrame.add( button );
 			}
 			
-			// add previous and next
-			JPanel panel = new JPanel();
-			panel.setLayout( new GridLayout( 1, 0 ) );
+			// spacer
+			editMonthFrame.add( new JLabel( "" ) );
+			editMonthFrame.add( new JLabel( "" ) );
+			
+			// previous & next
 			JButton previousButton = new JButton( "<< Previous" );
 			previousButton.setActionCommand( "previous" );
 			previousButton.addActionListener( controller );
+			editMonthFrame.add( previousButton );
 			JButton nextButton = new JButton( "Next >>" );
 			nextButton.setActionCommand( "next" );
 			nextButton.addActionListener( controller );
-			panel.add( previousButton );
-			panel.add( nextButton );
-			editMonthFrame.add( new JLabel( "" ) );
-			editMonthFrame.add( panel );
+			editMonthFrame.add( nextButton );
 
 			// repaint
 			if( doRepaint ) {

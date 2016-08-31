@@ -16,19 +16,27 @@ public class ViewPrinter {
 		return translator.translateMonthOfYear( month.getMonthOfYear() );
 	}
 	
-	public String printDay( Day day ) {
-		String printedDay = "";
-		printedDay += day.getDayOfMonth() + " " + translator.translateDayOfWeek( day.getDayOfWeek() ) + "  ||  ";
+	public String printDayBasic( Day day ) {
+		String printedDayBasic = translator.translateDayOfWeek( day.getDayOfWeek() ) + "  |  " ;
+		if( day.getDayOfMonth() < 10 ) {
+			printedDayBasic += "0";
+		}
+		printedDayBasic += day.getDayOfMonth() + "    "; 
+		return printedDayBasic;
+	}
+	
+	public String printDayText( Day day ) {
+		String printedDayText = " ";
 		if( day.getHoliday() != null ) {
-			printedDay += translator.translateHoliday( day.getHoliday() );
+			printedDayText += translator.translateHoliday( day.getHoliday() );
 		}
 		if( day.getEntry() != null ) {
 			if( day.getHoliday() != null ) {
-				printedDay += ", ";
+				printedDayText += ", ";
 			}
-			printedDay += day.getEntry();
+			printedDayText += day.getEntry();
 		}
-		return printedDay;
+		return printedDayText;
 	}
 	
 	public String printButtonLabel( Month month, Day day ) {

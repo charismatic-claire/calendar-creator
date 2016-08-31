@@ -93,7 +93,7 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 	public void update(Observable observable, Object argument ) {
 		if( observable == model ) {
 			ModelConfiguration config = (ModelConfiguration) argument;
-			view.updateLabelText( config );
+			view.updateLabel( config );
 			view.updateAvailability( config );
 		}
 	}
