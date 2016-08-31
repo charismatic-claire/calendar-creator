@@ -173,37 +173,41 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	}
 	
 	@Override
-	public boolean exportYearToTex( Language lang, Style style, String filename ) {
+	public void exportYearToTex( Language lang, Style style, String filename ) {
 		if( createdYear ) {
-			// create string
-			String printedYear = printYearTex( lang, style );
-			// create writer
-			CalendarWriter writer = new CalendarWriter();
-			// write file
-			return writer.writeToDisk( printedYear, filename, Format.TEX );
-		}
-		else {
-			return false;
+			try {
+				// create string
+				String printedYear = printYearTex( lang, style );
+				// create writer
+				CalendarWriter writer = new CalendarWriter();
+				// write file
+				writer.writeToDisk( printedYear, filename, Format.TEX );
+			}
+			catch( Exception e ) {
+				System.err.println( "Error exporting calendar to TEX." );
+			}
 		}
 	}
 
 	@Override
-	public boolean exportYearToConfigXml( String filename ) {
+	public void exportYearToConfigXml( String filename ) {
 		if( createdYear ) {
 			// create string
 			String printedYear = printYearConfig();
 			// create writer
 			CalendarWriter writer = new CalendarWriter();
 			// write file
-			return writer.writeToDisk( printedYear, filename, Format.XML );
-		}
-		else {
-			return false;
+			try {
+				writer.writeToDisk( printedYear, filename, Format.XML );
+			}
+			catch( Exception e) {
+				System.err.println( "Error exporting to XML." );
+			}
 		}
 	}
 	
 	@Override
-	public boolean importYearFromConfigXml( String filename ) {
+	public void importYearFromConfigXml( String filename ) {
 		CalendarReader reader = new CalendarReader();
 		CalendarImportExport importer = new CalendarImportExport();
 		try {
@@ -212,9 +216,8 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 			updateModelConfiguration();
 		}
 		catch( Exception e ) {
-			return false;
+			System.err.println( "Error opening calendar." );
 		}
-		return true;
 	}
 	
 	@Override
@@ -271,7 +274,7 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 	 * @param style Layout style of the printer class
 	 * @return *.tex string
 	 */
-	private String printYearTex( Language lang, Style style ) {
+	private String printYearTex( Language lang, Style style ) throws Exception  {
 		// init
 		String printedYear = null;
 		
@@ -279,11 +282,15 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 		if( year != null ) {
 			// create translator
 			CalendarTranslator translator;
-			if( lang == Language.DE ) {
-				translator = new CalendarTranslatorGerman();
-			}
-			else {
-				translator = new CalendarTranslatorEnglish();
+			switch( lang ) {
+				case DE:
+					translator = new CalendarTranslatorGerman();
+					break;
+				case EN:
+					translator = new CalendarTranslatorEnglish();
+					break;
+				default:
+					throw new Exception() ;
 			}
 			// create printer
 			CalendarPrinter printer;
@@ -300,9 +307,11 @@ public class CalendarModelFull extends Observable implements CalendarModel {
 				case JEDDI:
 					printer = new CalendarPrinterTexJeddi( translator );
 					break;
-				default:
+				case CLASSIC:
 					printer = new CalendarPrinterTexClassic( translator );
 					break;
+				default:
+					throw new Exception();
 			}
 			// create string
 			printedYear = printer.printYear( year );

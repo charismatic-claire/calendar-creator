@@ -91,7 +91,7 @@ public interface CalendarModel {
 	 * @param filename path to output file
 	 * @return true if successful
 	 */
-	public boolean exportYearToTex( Language lang, Style style, String filename );
+	public void exportYearToTex( Language lang, Style style, String filename );
 	
 	/**
 	 * Export the configuration of a calendar year to a XML file.
@@ -99,7 +99,7 @@ public interface CalendarModel {
 	 * @param filename path to output file
 	 * @return true if successful
 	 */
-	public boolean exportYearToConfigXml( String filename );
+	public void exportYearToConfigXml( String filename );
 	
 	/**
 	 * Import the configuration of a calendar year from a XML file
@@ -108,7 +108,7 @@ public interface CalendarModel {
 	 * @param filename path to input file
 	 * @return true if successful
 	 */
-	public boolean importYearFromConfigXml( String filename );
+	public void importYearFromConfigXml( String filename );
 	
 	/**
 	 * Return calendar year from the model

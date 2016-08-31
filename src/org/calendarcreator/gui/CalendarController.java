@@ -43,7 +43,7 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 		// action
 		switch( command ) {
 			case "new":
-				model.createYear( view.getYearInteger() );
+				createYear();
 				break;
 			case "open":
 				model.importYearFromConfigXml( view.getOpenXmlFilePath() );
@@ -61,7 +61,7 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 				terminate();
 				break;
 			case "update.year":
-				model.updateYear( view.getYearInteger() );
+				updateYear();
 				break;
 			case "add.holidays":
 				model.addHolidays();
@@ -103,6 +103,23 @@ public class CalendarController extends WindowAdapter implements ActionListener,
 		terminate();
 	}
 	
+	private void createYear() {
+		try {
+			model.createYear( view.getYearInteger() );
+		}
+		catch( Exception e ) {
+			System.err.println( "Error creating new year." );
+		}
+	}
+	
+	private void updateYear() {
+		try {
+			model.updateYear( view.getYearInteger() );
+		}
+		catch( Exception e ) {
+			System.err.println( "Error updating existing year." );
+		}
+	}
 	private int incrementMonth() {
 		if( monthToEdit < 12 ) {
 			return ++monthToEdit;

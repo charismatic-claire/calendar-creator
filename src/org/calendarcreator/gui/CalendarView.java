@@ -69,16 +69,10 @@ public class CalendarView extends AbstractCalendarView {
 		}
 	}
 	
-	protected Integer getYearInteger() {
-		try {
+	protected Integer getYearInteger() throws Exception {
 			String yearString = JOptionPane.showInputDialog( "Select year:" );
 			Integer yearInteger = Integer.parseInt( yearString );
 			return yearInteger;
-		}
-		catch( Exception e ) {
-			System.err.println( "Input not accepted." );
-		}
-		return null;
 	}
 	
 	protected void showHelp() {

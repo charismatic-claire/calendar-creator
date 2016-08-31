@@ -4,7 +4,6 @@
 package org.calendarcreator.io;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -15,23 +14,18 @@ import org.calendarcreator.data.Format;
  */
 public class CalendarWriter {
 
-	public boolean writeToDisk( String data, String filename, Format format ) {
-		// init
-		Boolean success = true;
+	public void writeToDisk( String data, String filename, Format format ) throws Exception {
 		// add file extension
 		File file = new File( addFileExtension( filename, format ) ); 
 		// operate
-		try {
-			FileUtils.writeStringToFile( file, data );
-		}
-		catch (IOException e) {
-			success = false;
-		}
-		// return
-		return success;
+		FileUtils.writeStringToFile( file, data );
 	}
 	
 	private String addFileExtension( String file, Format format ) {
+		// no empty string
+		if( file.isEmpty() || file == null ) {
+			return null;
+		}
 		// init
 		String fileWithExtension;
 		// prepare
