@@ -2,7 +2,8 @@ package org.calendarcreator.data;
 
 public enum Holiday {
 	NEW_YEARS_DAY,
-	EASTER_DAY,
+	GOOD_FRIDAY,
+	EASTER_SUNDAY,
 	EASTER_MONDAY,
 	MAY_DAY,
 	ASCENSION_DAY,
@@ -11,6 +12,7 @@ public enum Holiday {
 	DAY_OF_GERMAN_UNITY,
 	REFORMATION_DAY,
 	REPENTANCE_DAY,
+	CHRISTMAS_EVE,
 	CHRISTMAS_DAY,
 	BOXING_DAY
 }

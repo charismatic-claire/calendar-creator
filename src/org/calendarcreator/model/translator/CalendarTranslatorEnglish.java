@@ -52,9 +52,11 @@ public class CalendarTranslatorEnglish implements CalendarTranslator {
 		mapHoliday.put( Holiday.ASCENSION_DAY, "Ascension Day" );
 		mapHoliday.put( Holiday.BOXING_DAY, "Boxing Day" );
 		mapHoliday.put( Holiday.CHRISTMAS_DAY, "Christmas Day" );
+		mapHoliday.put( Holiday.CHRISTMAS_EVE , "Christmas Eve" );
 		mapHoliday.put( Holiday.DAY_OF_GERMAN_UNITY, "Day of German Unity" );
-		mapHoliday.put( Holiday.EASTER_DAY, "Easter Day" );
+		mapHoliday.put( Holiday.EASTER_SUNDAY, "Easter Sunday" );
 		mapHoliday.put( Holiday.EASTER_MONDAY, "Easter Monday" );
+		mapHoliday.put( Holiday.GOOD_FRIDAY , "Good Friday" );
 		mapHoliday.put( Holiday.MAY_DAY, "May Day" );
 		mapHoliday.put( Holiday.NEW_YEARS_DAY, "New Years Day" );
 		mapHoliday.put( Holiday.REFORMATION_DAY, "Reformation Day" );

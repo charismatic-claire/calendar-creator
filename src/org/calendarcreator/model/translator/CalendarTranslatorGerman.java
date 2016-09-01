@@ -51,9 +51,11 @@ public class CalendarTranslatorGerman implements CalendarTranslator {
 		mapHoliday.put( Holiday.ASCENSION_DAY, "Christi Himmelfahrt" );
 		mapHoliday.put( Holiday.BOXING_DAY, "2. Weihnachtsfeiertag" );
 		mapHoliday.put( Holiday.CHRISTMAS_DAY, "1. Weihnachtsfeiertag" );
+		mapHoliday.put( Holiday.CHRISTMAS_EVE, "Heiligabend" );
 		mapHoliday.put( Holiday.DAY_OF_GERMAN_UNITY, "Tag der Deutschen Einheit" );
-		mapHoliday.put( Holiday.EASTER_DAY, "Ostersonntag" );
+		mapHoliday.put( Holiday.EASTER_SUNDAY, "Ostersonntag" );
 		mapHoliday.put( Holiday.EASTER_MONDAY, "Ostermontag" );
+		mapHoliday.put( Holiday.GOOD_FRIDAY , "Karfreitag" );
 		mapHoliday.put( Holiday.MAY_DAY, "Tag der Arbeit" );
 		mapHoliday.put( Holiday.NEW_YEARS_DAY, "Neujahr" );
 		mapHoliday.put( Holiday.REFORMATION_DAY, "Reformationstag" );

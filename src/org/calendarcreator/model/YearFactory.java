@@ -205,28 +205,32 @@ public class YearFactory {
 	private Map<Holiday,Date> evaluateDatesOfHolidays() {
 		// initialize
 		Map<Holiday,Date> holidays = new HashMap<Holiday,Date>();
-		Date dateOfEasterDay = evaluateDateOfEasterDay();
+		Date dateOfEasterSunday = evaluateDateOfEasterSunday();
 		
 		// NEW_YEARS_DAY
 		holidays.put( Holiday.NEW_YEARS_DAY,  new Date( 1, 1 ) );
-		// EASTER_DAY
-		holidays.put( Holiday.EASTER_DAY, dateOfEasterDay );
+		// GOOD_FRIDAY
+		holidays.put( Holiday.GOOD_FRIDAY ,  dayOfYear2date( date2dayOfYear( dateOfEasterSunday ) - 2 ) );
+		// EASTER_SUNDAY
+		holidays.put( Holiday.EASTER_SUNDAY, dateOfEasterSunday );
 		// EASTER_MONDAY
-		holidays.put( Holiday.EASTER_MONDAY , dayOfYear2date( date2dayOfYear( dateOfEasterDay ) + 1 ) );
+		holidays.put( Holiday.EASTER_MONDAY , dayOfYear2date( date2dayOfYear( dateOfEasterSunday ) + 1 ) );
 		// MAY_DAY
 		holidays.put( Holiday.MAY_DAY, new Date( 5, 1 ) );
 		// ASCENSION_DAY
-		holidays.put( Holiday.ASCENSION_DAY, dayOfYear2date( date2dayOfYear( dateOfEasterDay ) + 39 ) );
+		holidays.put( Holiday.ASCENSION_DAY, dayOfYear2date( date2dayOfYear( dateOfEasterSunday ) + 39 ) );
 		// WHIT_SUNDAY
-		holidays.put( Holiday.WHIT_SUNDAY, dayOfYear2date( date2dayOfYear( dateOfEasterDay ) + 49 ) );
+		holidays.put( Holiday.WHIT_SUNDAY, dayOfYear2date( date2dayOfYear( dateOfEasterSunday ) + 49 ) );
 		// WHIT_MONDAY
-		holidays.put( Holiday.WHIT_MONDAY, dayOfYear2date( date2dayOfYear( dateOfEasterDay ) + 50 ) );
+		holidays.put( Holiday.WHIT_MONDAY, dayOfYear2date( date2dayOfYear( dateOfEasterSunday ) + 50 ) );
 		// DAY_OF_GERMAN_UNITY
 		holidays.put( Holiday.DAY_OF_GERMAN_UNITY, new Date( 10, 3 ) );
 		// REFORMATION_DAY
 		holidays.put( Holiday.REFORMATION_DAY, new Date( 10, 31 ) );
 		// REPENTANCE_DAY
 		holidays.put( Holiday.REPENTANCE_DAY, evaluateDateOfRepentanceDay() );
+		// CHRISTMAS_EVE
+		holidays.put( Holiday.CHRISTMAS_EVE, new Date( 12, 24 ) );
 		// CHRISTMAS_DAY
 		holidays.put( Holiday.CHRISTMAS_DAY, new Date( 12, 25 ) );
 		// BOXING_DAY
@@ -266,7 +270,7 @@ public class YearFactory {
 	 * Evaluate the date of Easter Day
 	 * @return
 	 */
-	private Date evaluateDateOfEasterDay() {
+	private Date evaluateDateOfEasterSunday() {
 		// the year
 		int x = year.getYearInteger();
 		// secondary number
