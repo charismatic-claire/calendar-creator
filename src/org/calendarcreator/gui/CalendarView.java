@@ -172,13 +172,14 @@ public class CalendarView extends AbstractCalendarView {
 			CalendarTranslator translator = new CalendarTranslatorEnglish();
 			ViewPrinter printer = new ViewPrinter( translator );
 			boolean doRepaint = false;
+			int rowCounter = 0;
 			
 			// configure frame
 			if( editMonthFrame == null ) {
 				editMonthFrame = new JFrame();
 				editMonthFrame.setSize( 600, 750 );
 				editMonthFrame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-				editMonthFrame.setLayout( new GridLayout( 0, 2 ) );				
+				editMonthFrame.setLayout( new GridLayout( 33, 2 ) );				
 			}
 			else {
 				editMonthFrame.getContentPane().removeAll();
@@ -199,11 +200,16 @@ public class CalendarView extends AbstractCalendarView {
 				button.setActionCommand( printer.printButtonLabel( month, day ) );
 				button.addActionListener( entryButtonController );
 				editMonthFrame.add( button );
+				// counter
+				rowCounter++;
 			}
 			
 			// spacer
-			editMonthFrame.add( new JLabel( "" ) );
-			editMonthFrame.add( new JLabel( "" ) );
+			for( int totalRows = 33; totalRows - rowCounter > 1; rowCounter++ ) {
+				for( int i=0; i<2; i++) {
+					editMonthFrame.add( new JLabel( "" ) );
+				}
+			}
 			
 			// previous & next
 			JButton previousButton = new JButton( "<< Previous" );

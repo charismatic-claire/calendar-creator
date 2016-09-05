@@ -73,7 +73,7 @@ public abstract class AbstractCalendarView extends JFrame {
 	 */
 	private void prepareGUI() {
 		// init window
-		this.setTitle( "CalendarCreater v2.0" );
+		this.setTitle( "Calendar Creator v2.0" );
 		this.setSize( 300, 400 );
 		this.setLayout( new GridLayout( 0, 2 ) );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
