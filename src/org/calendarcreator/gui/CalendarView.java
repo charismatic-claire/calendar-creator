@@ -76,7 +76,27 @@ public class CalendarView extends AbstractCalendarView {
 	}
 	
 	protected void showHelp() {
-		JOptionPane.showMessageDialog( this, "CalendarCreator v2.0 Help\n\nHelp text here..." );
+		String title = "Calendar Creator Help";
+		String message = "* NEW CALENDAR: To initialize the calendar creation process\n" +
+				"  you need to start with this.\n\n" + 
+				"* OPEN CALENDAR: Open a saved calendar from a XML file. This is cool\n" +
+				"  because this way you can reuse your entries\n\n" +
+				"* SAVE CALENDAR: Save your calendar for later use to a XML file.\n\n" + 
+				"* EXPORT AS TEX: Create a compilable TEX file from your calendar.\n" + 
+				"  You can choose between different languages and styles.\n\n" + 
+				"* CLOSE CALENDAR: Discard the current calendar and start over.\n\n" + 
+				"* EXIT: Quit the program.\n\n" + 
+				"* UPDATE YEAR: Change the year of your calendar, preserving every\n" +
+				"  other property. This is i.e. cool if you want to reuse the saved\n"+
+				"  calendar from last year.\n\n" + 
+				"* ADD HOLIDAYS: Automatically determine the dates of all holidays this\n" +
+				"  year and add them to the calendar.\n\n" + 
+				"* REMOVE HOLIDAYS: Dismiss the added holidays.\n\n" + 
+				"* EDIT ENTRIES: Shows a calendar dialog and let's you add individual\n" +
+				"  entries to the calendar. This is i.e. cool for birthdays.\n\n" + 
+				"* REMOVE ALL ENTRIES: Dismiss all added entries.\n\n" + 
+				"* SHOW HELP: Show this help.\n\n";
+		JOptionPane.showMessageDialog( this, message, title, JOptionPane.INFORMATION_MESSAGE );
 	}
 	
 	protected String getSaveTexFilePath() {
