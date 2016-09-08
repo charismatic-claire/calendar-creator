@@ -128,7 +128,7 @@ public class CalendarPrinterTexJeddi extends CalendarPrinterTex {
 	protected String printSpacing() {
 		// create
 		String printedSpacing = "%% spacing\n" +
-				"\\renewcommand{\\arraystretch}{1.99}\n" +
+				"\\renewcommand{\\arraystretch}{1.98}\n" +
 				"\\newcommand{\\ww}{0.5cm}\n" +
 				"\\newcommand{\\cw}{3.55cm}\n" +
 				"\\newcommand{\\bl}{~\\newline}\n\n";
