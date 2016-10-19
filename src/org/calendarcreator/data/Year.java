@@ -81,7 +81,7 @@ public class Year {
 			for( int j = 1; j <= newMonth.getLengthOfMonth(); j++ ) {
 				Day day = collectionOfDays.get( j );
 				if( day.getDayOfWeek() == DayOfWeek.SUNDAY ) {
-					day.setWeekOfYear( ++weekOfYear );
+					day.setWeekOfYear( weekOfYear++ );
 				}
 			}
 			
