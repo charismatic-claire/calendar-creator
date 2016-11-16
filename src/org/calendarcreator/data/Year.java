@@ -80,8 +80,8 @@ public class Year {
 			Map<Integer,Day> collectionOfDays = newMonth.getCollectionOfDays();
 			for( int j = 1; j <= newMonth.getLengthOfMonth(); j++ ) {
 				Day day = collectionOfDays.get( j );
-				if( day.getDayOfWeek() == DayOfWeek.SUNDAY ) {
-					day.setWeekOfYear( weekOfYear++ );
+				if( day.getDayOfWeek() == DayOfWeek.MONDAY ) {
+					day.setWeekOfYear( ++weekOfYear );
 				}
 			}
 			

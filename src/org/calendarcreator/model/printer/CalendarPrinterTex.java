@@ -3,6 +3,8 @@
  */
 package org.calendarcreator.model.printer;
 
+import java.util.Arrays;
+
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;
 import org.calendarcreator.data.Month;
@@ -61,10 +63,15 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 	}
 	
 	protected String printDay( Day day ) {
+		// define weekend
+		DayOfWeek[] weekend = {
+				DayOfWeek.SATURDAY,
+				DayOfWeek.SUNDAY
+		};
 		// init string
 		String printedDay = "";
 		// open day
-		if( day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY ) {
+		if( Arrays.asList( weekend ).contains( day.getDayOfWeek() ) ) {
 			printedDay += "\\weekend";
 		}
 		else {
@@ -82,7 +89,7 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 		}
 		printedDay += printEntry( day ) + "}";
 		// print week of year
-		if( day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY ) {
+		if( ! Arrays.asList( weekend ).contains( day.getDayOfWeek() ) ) {
 			printedDay += "{" + printWeekOfYear( day ) + "}";
 		}
 		// close day
@@ -149,11 +156,11 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 	
 	protected String printWorkWeek() {
 		// create
-		String printedWorkWeek = "%% table rows, mondy to friday\n" +
-				"\\newcommand{\\workweek}[3]{%\n" +
+		String printedWorkWeek = "%% table rows, monday to friday\n" +
+				"\\newcommand{\\workweek}[4]{%\n" +
 				"	\\textbf{#1} \\hspace{1.0mm} #2 &%\n" +
 				"	{\\footnotesize #3} &%\n" +
-				"	\\\\ \\hhline{|-|-|}%\n" +
+				"	{\\scriptsize #4} \\\\ \\hhline{|-|-|}%\n" +
 				"}\n\n";
 		// return
 		return printedWorkWeek;
@@ -162,10 +169,10 @@ public abstract class CalendarPrinterTex implements CalendarPrinter {
 	protected String printWeekend() {
 		// create
 		String printedWeekend = "%% table rows, staturday and sunday\n" +
-				"\\newcommand{\\weekend}[4]{%\n" +
+				"\\newcommand{\\weekend}[3]{%\n" +
 				"	\\rowcolor{black!20} \\textbf{#1} \\hspace{1.0mm} #2 &%\n" +
 				"	{\\footnotesize #3} &%\n" +
-				"	\\cellcolor{white} {\\scriptsize #4} \\\\ \\hhline{|-|-|}%\n" +
+				"	\\cellcolor{white} \\\\ \\hhline{|-|-|}%\n" +
 				"}\n\n";
 		// return
 		return printedWeekend;
