@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.tests;
+package org.calendarcreator;
 
 import org.calendarcreator.data.Day;
 import org.calendarcreator.data.DayOfWeek;

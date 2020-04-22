@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.calendarcreator.tests;
+package org.calendarcreator;
 
 //import java.util.Map;
 //import java.util.Map.Entry;

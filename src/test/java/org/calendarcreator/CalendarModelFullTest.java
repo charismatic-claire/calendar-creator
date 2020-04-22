@@ -1,4 +1,4 @@
-package org.calendarcreator.tests;
+package org.calendarcreator;
 
 import static org.junit.Assert.*;
 
