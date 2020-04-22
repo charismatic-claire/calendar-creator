@@ -55,8 +55,8 @@ public abstract class AbstractCalendarView extends JFrame {
 	
 	public AbstractCalendarView( CalendarController controller ) {
 		this.controller = controller;
-		this.successIcon = new ImageIcon( this.getClass().getResource( "/org/calendarcreator/gui/success.png" ) );
-		this.errorIcon = new ImageIcon( this.getClass().getResource( "/org/calendarcreator/gui/error.png" ) );
+		this.successIcon = new ImageIcon( this.getClass().getResource( "/img/success.png" ) );
+		this.errorIcon = new ImageIcon( this.getClass().getResource( "/img/error.png" ) );
 		prepareGUI();
 	}
 
