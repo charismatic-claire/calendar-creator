@@ -8,3 +8,5 @@
  */
 
 rootProject.name = 'calendar-creator'
+include 'main'
+
